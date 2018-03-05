@@ -11,15 +11,15 @@ TEMPLATE = lib
 # Warnings for deprecated Qt features
 DEFINES += QT_DEPRECATED_WARNINGS
 
-# Include all the source files
-
 # Include all the header files
-HEADERS += \
-    $$PWD/../RaspberryPiCm3/DeviceTest.h \
+
+
+# Include all the source files
+SOURCES += \
+    $$PWD/../RaspberryPiCm3/gpio.c
 
 # Include the read me files and licensing files
 DISTFILES += \
     readme.md
 
-SOURCES += \
-    $$PWD/../RaspberryPiCm3/gpio.c
+
