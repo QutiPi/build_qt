@@ -27,11 +27,18 @@ The main aim of the library is to help in the following areas
       * LM75
     * GPIO Expanders
 
+## Coding Standards
+
+This project is no too strict on coding standard however i encourage you to have a scan through http://www.possibility.com/Cpp/CppCodingStandard.html
+
+Noting the main difference betwen sytax for C vs C++, for example for function / method names
+
+  * C: gpio_init()
+  * C++: gpioInit()
+
 ## Developed by, Helped By and Supported by
 
 This version of the QutiPi C++ was developed by Sam Mottley at the The University of Manchester's, Electronics Section (JFET Services).
-
-However lots of credit must go to [WiringPi](http://wiringpi.com/) whom project speed up development of this project by demonstrating how X, Y, Z can be performed.
 
 ## License
 

@@ -22,12 +22,12 @@ include( Targets/$${TARGETBOARD}/$${TARGETBOARD}.pro)
 DEFINES += QT_DEPRECATED_WARNINGS
 
 # Include all the source files
-SOURCES += $$PWD/QutipiCpp.cpp
+SOURCES += Drivers/DigitalIn.cpp \
 
 # Include all the header files
-HEADERS += $$PWD/QutipiCpp.h \
-    $$PWD/Global.h \
-    Hal/gpio.h
+HEADERS += $$PWD/Global.h \
+    Hal/gpio.h \
+    Drivers/DigitalIn.h
 
 # Ensure the targets are not included
 SOURCES -= Targets/*/*.cpp
@@ -35,4 +35,4 @@ HEADERS -= Targets/*/*.h
 
 # Include the read me files and licensing files
 DISTFILES += \
-    readme.md
+    $$PWD/readme.md

@@ -8,17 +8,17 @@
 #include <Hal/gpio.h>
 
 
-class QUTIPICPPSHARED_EXPORT QutipiCpp
+class QUTIPICPPSHARED_EXPORT DigitalIn
 {
 
 public:
-    QutipiCpp();
+    DigitalIn();
 
-    QString helloWorld(int number)
+    QString read()
     {
         qDebug() << gpio_init();
 
-        return "Hello world from library";
+        return "Read method ran";
     }
 };
 

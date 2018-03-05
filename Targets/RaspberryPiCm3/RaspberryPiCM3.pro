@@ -20,6 +20,6 @@ SOURCES += \
 
 # Include the read me files and licensing files
 DISTFILES += \
-    readme.md
+    $$PWD/../RaspberryPiCm3/readme.md
 
 
