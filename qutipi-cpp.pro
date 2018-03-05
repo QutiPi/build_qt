@@ -26,7 +26,8 @@ SOURCES += $$PWD/QutipiCpp.cpp
 
 # Include all the header files
 HEADERS += $$PWD/QutipiCpp.h \
-    $$PWD/Global.h
+    $$PWD/Global.h \
+    Hal/gpio.h
 
 # Ensure the targets are not included
 SOURCES -= Targets/*/*.cpp
