@@ -1,11 +1,13 @@
 #pragma once
 
 
-class Device
+class DeviceTest
 {
 
 public:
-    Device();
+    DeviceTest(){
+
+    }
 
     int name(int number){ 
         return number;
