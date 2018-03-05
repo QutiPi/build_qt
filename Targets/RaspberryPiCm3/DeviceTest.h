@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QDebug>
 
 class DeviceTest
 {
