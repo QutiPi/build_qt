@@ -16,7 +16,7 @@ public:
 
     QString read()
     {
-        qDebug() << gpio_init();
+        qDebug() << gpio_read();
 
         return "Read method ran";
     }

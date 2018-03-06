@@ -1,6 +1,14 @@
+#include <stdint.h>
 
+static volatile int *gpio;
 
 int gpio_init()
 {
-   return 101;
+    gpio = (int *)102;
+    return (int)gpio;
+}
+
+int gpio_read()
+{
+    return (int)gpio;
 }

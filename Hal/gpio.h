@@ -6,6 +6,8 @@ extern "C" {
 
     int gpio_init();
 
+    int gpio_read();
+
 #ifdef __cplusplus
 }
 #endif

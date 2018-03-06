@@ -3,5 +3,5 @@
 
 DigitalIn::DigitalIn()
 {
-    qDebug() << "DigitalIn class created";
+    qDebug() << "DigitalIn class created" << gpio_init();
 }
