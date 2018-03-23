@@ -9,6 +9,7 @@ QT -= gui
 TARGET = qutipi-cpp
 TEMPLATE = lib
 DEFINES += QUTIPI_CPP
+CONFIG += staticlib
 
 # Include the confiruation file
 include($$PWD/../../config.pri)
