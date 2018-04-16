@@ -29,7 +29,14 @@ SOURCES += Drivers/DigitalIn.cpp \
 HEADERS += $$PWD/Global.h \
     Hal/gpio.h \
     Drivers/DigitalIn.h \
-    Hal/pin_map.h
+    Hal/pin_map.h \
+    Hal/dma.h \
+    Hal/pwm.h \
+    Hal/gpio_irq.h \
+    Hal/delay.h \
+    Hal/gpclk.h \
+    Hal/timer.h \
+    Hal/pcm.h
 
 # Ensure the targets are not included
 #SOURCES -= Targets/*/*.cpp
