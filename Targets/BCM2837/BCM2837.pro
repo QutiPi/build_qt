@@ -11,15 +11,21 @@ TEMPLATE = lib
 # Warnings for deprecated Qt features
 DEFINES += QT_DEPRECATED_WARNINGS
 
-# Include all the header files
+# Select the target board for the ic
+include(Boards/$${TARGETBOARD}/$${TARGETBOARD}.pri)
 
+# Include all the header files
+HEADERS += \
+    $$PWD/port_types.h
 
 # Include all the source files
 SOURCES += \
-    $$PWD/../RaspberryPiCm3/gpio.c
+    $$PWD/gpio.c
 
 # Include the read me files and licensing files
 DISTFILES += \
-    $$PWD/../RaspberryPiCm3/readme.md
+    $$PWD/readme.md
+
+
 
 

@@ -15,9 +15,9 @@ CONFIG += staticlib
 include($$PWD/../../config.pri)
 
 # Select the target for the framework
-INCLUDEPATH += $$PWD/Targets/$${TARGETBOARD} \
-SUBDIRS += $$PWD/Targets/$${TARGETBOARD}
-include( Targets/$${TARGETBOARD}/$${TARGETBOARD}.pro)
+INCLUDEPATH += $$PWD/Targets/$${TARGETSOC} \
+SUBDIRS += $$PWD/Targets/$${TARGETSOC}
+include( Targets/$${TARGETSOC}/$${TARGETSOC}.pro)
 
 # Warnings for deprecated Qt features
 DEFINES += QT_DEPRECATED_WARNINGS
@@ -28,7 +28,8 @@ SOURCES += Drivers/DigitalIn.cpp \
 # Include all the header files
 HEADERS += $$PWD/Global.h \
     Hal/gpio.h \
-    Drivers/DigitalIn.h
+    Drivers/DigitalIn.h \
+    Hal/pinmap.h
 
 # Ensure the targets are not included
 SOURCES -= Targets/*/*.cpp
