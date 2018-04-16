@@ -12,6 +12,9 @@ HEADERS += \
 DISTFILES += \
     $$PWD/readme.md
 
+SOURCES += \
+    $$PWD/peripheral_pins.c
+
 
 
 

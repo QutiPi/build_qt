@@ -29,11 +29,11 @@ SOURCES += Drivers/DigitalIn.cpp \
 HEADERS += $$PWD/Global.h \
     Hal/gpio.h \
     Drivers/DigitalIn.h \
-    Hal/pinmap.h
+    Hal/pin_map.h
 
 # Ensure the targets are not included
-SOURCES -= Targets/*/*.cpp
-HEADERS -= Targets/*/*.h
+#SOURCES -= Targets/*/*.cpp
+#HEADERS -= Targets/*/*.h
 
 # Include the read me files and licensing files
 DISTFILES += \

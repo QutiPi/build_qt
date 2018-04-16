@@ -9,7 +9,7 @@ static volatile int *gpio;
  * @brief gpio_init
  * @return
  */
-void gpio_init()
+int gpio_init()
 {
     gpio = (int *)102;
     return (int)gpio;
