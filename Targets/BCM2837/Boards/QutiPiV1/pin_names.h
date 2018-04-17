@@ -10,10 +10,9 @@ extern "C" {
 
     // Port states
     typedef enum {
-        PullNone = 0,           // 0b00
-        PullDown = 1,           // 0b01
-        PullUp   = 2,           // 0b10
-        PullDefault = PullUp
+        NONE = 0,           // 0b00
+        DOWN = 1,           // 0b01
+        UP   = 2,           // 0b10
     } PinMode;
 
 
@@ -185,6 +184,12 @@ extern "C" {
         FunctionPeripherals peripheral;
         FunctionSelect function;
     } PinMap;
+
+    /*typedef struct {
+        PinName  pin;
+        uint8_t mode;
+        uint8_t direction;
+    } gpio_t;*/
 
 #ifdef __cplusplus
 }

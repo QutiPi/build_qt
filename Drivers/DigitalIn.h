@@ -5,7 +5,7 @@
 #include <QString>
 #include <QDebug>
 
-#include <Hal/gpio.h>
+#include "Hal/gpio_api.h"
 
 
 class QUTIPICPPSHARED_EXPORT DigitalIn
@@ -16,7 +16,7 @@ public:
 
     QString read()
     {
-        qDebug() << gpio_read();
+        //qDebug() << gpio_read();
 
         return "Read method ran";
     }

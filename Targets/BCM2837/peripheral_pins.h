@@ -1,6 +1,6 @@
 #pragma once
 
-#include "pin_names.h"
+#include <objects.h>
 
 #ifdef __cplusplus
 extern "C" {

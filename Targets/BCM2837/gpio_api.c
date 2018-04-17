@@ -1,5 +1,7 @@
 #include <stdint.h>
 
+#include <Hal/gpio_api.h>
+
 static volatile int *gpio;
 
 
@@ -9,10 +11,10 @@ static volatile int *gpio;
  * @brief gpio_init
  * @return
  */
-int gpio_init()
+void gpio_init(gpio_t *obj, PinName pin)
 {
     gpio = (int *)102;
-    return (int)gpio;
+    // return (int)gpio;
 }
 
 
@@ -22,7 +24,7 @@ int gpio_init()
  * @brief gpio_mode
  * @return
  */
-void gpio_mode()
+void gpio_mode(gpio_t *obj, PinMode mode)
 {
 
 }
@@ -33,7 +35,7 @@ void gpio_mode()
  *
  * @brief gpio_dir
  */
-void gpio_dir()
+void gpio_dir(gpio_t *obj, FunctionSelect pin)
 {
 
 }
@@ -46,7 +48,7 @@ void gpio_dir()
  * @brief gpio_read
  * @return
  */
-int gpio_read()
+int gpio_read(gpio_t *obj)
 {
     return (int)gpio;
 }
@@ -58,7 +60,7 @@ int gpio_read()
  * @brief gpio_write
  * @return
  */
-void gpio_write()
+void gpio_write(gpio_t *obj, int value)
 {
 
 }

@@ -1,17 +1,22 @@
 #pragma once
 
-#include <pin_names.h>
-
+#include <device.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
     // Select the function for a pin
-    void pin_function(PinName pin, FunctionSelect function);
+    void pin_func(PinName pin, FunctionSelect function);
 
-    // Input, output
+    // Return the current pin function
+    FunctionSelect pin_func(PinName pin);
+
+    // Set pull up down none
     void pin_mode(PinName pin, PinMode mode);
+
+    // Return the current pin mode
+    PinMode pin_mode(PinName pin);
 
 #ifdef __cplusplus
 }

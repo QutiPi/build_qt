@@ -11,13 +11,17 @@ TEMPLATE = lib
 DEFINES += QUTIPI_CPP
 CONFIG += staticlib
 
+# Disable unused warning parameter
+QMAKE_CXXFLAGS_WARN_OFF -= -Wunused-parameter -Wall
+QMAKE_CFLAGS_WARN_OFF -= -Wunused-parameter -Wall
+
 # Include the confiruation file
 include($$PWD/../../config.pri)
 
 # Select the target for the framework
 INCLUDEPATH += $$PWD/Targets/$${TARGETSOC} \
 SUBDIRS += $$PWD/Targets/$${TARGETSOC}
-include( Targets/$${TARGETSOC}/$${TARGETSOC}.pro)
+include(Targets/$${TARGETSOC}/$${TARGETSOC}.pri)
 
 # Warnings for deprecated Qt features
 DEFINES += QT_DEPRECATED_WARNINGS
@@ -27,16 +31,17 @@ SOURCES += Drivers/DigitalIn.cpp \
 
 # Include all the header files
 HEADERS += $$PWD/Global.h \
-    Hal/gpio.h \
     Drivers/DigitalIn.h \
     Hal/pin_map.h \
-    Hal/dma.h \
-    Hal/pwm.h \
-    Hal/gpio_irq.h \
-    Hal/delay.h \
-    Hal/gpclk.h \
-    Hal/timer.h \
-    Hal/pcm.h
+    Hal/gpio_api.h \
+    Hal/gpclk_api.h \
+    Hal/dma_api.h \
+    Hal/delay_api.h \
+    Hal/pcm_api.h \
+    Hal/pwm_api.h \
+    Hal/timer_api.h \
+    Hal/gpio_irq_api.h \
+    Hal/port_api.h
 
 # Ensure the targets are not included
 #SOURCES -= Targets/*/*.cpp
