@@ -10,10 +10,10 @@ extern "C" {
     void gpio_set_pad_drive(int group, int value);
 
     // Set input hysteresis
-    void gpio_input_hysteresis(int group, bool state);
+    // void gpio_input_hysteresis(int group, bool state);
 
     // Limit slew rate of GPIO group
-    void gpio_limit_slew_rate(int group, bool state);
+    // void gpio_limit_slew_rate(int group, bool state);
 
 #ifdef __cplusplus
 }

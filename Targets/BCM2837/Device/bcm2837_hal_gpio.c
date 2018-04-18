@@ -1,5 +1,31 @@
+#include <stdint.h>
+#include <stdbool.h>
+#include <fcntl.h>
+#include <sys/mman.h>
 
 #include <Device/bcm2837_hal_gpio.h>
+#include <Hal/pin_map.h>
+
+
+/**
+ * Hold referance to mapped pads device in memory
+ */
+static volatile uint32_t *pads = MAP_FAILED;
+
+
+/**
+ * Base address to access the pads
+ */
+static volatile unsigned int pads_base = BCM_PORT_SHIFT + 0x00100000;
+
+
+/**
+ * Define block size
+ */
+#define BCM_GPIO_SIZE 0x38
+
+
+
 
 /**
  * Set the maxium drive for an gpio group before damage can be caused
@@ -8,9 +34,9 @@
  *
  * @brief gpio_set_pad_drive
  * @param group
- *          1: 0x 7e10 002c PADS (GPIO 0-27)
- *          2: 0x 7e10 0030 PADS (GPIO 28-45)
- *          3: 0x 7e10 0034 PADS (GPIO 46-53)
+ *          0: 0x 7e10 002c PADS (GPIO 0-27)
+ *          1: 0x 7e10 0030 PADS (GPIO 28-45)
+ *          2: 0x 7e10 0034 PADS (GPIO 46-53)
  * @param value
  *          0: 2mA
  *          1: 4mA
@@ -23,33 +49,15 @@
  */
 void gpio_set_pad_drive(int group, int value)
 {
+    // Ensure group and value are between allowed ranges
+    if ((group < 0) || (group > 2) || (value < 0) || (value > 7))
+          return ;
 
-}
+    // Generate the new configuration
+    uint32_t config = BCM_PASSWORD | 0x18 | (value & 7) ;
 
-
-/**
- * Set whether to use input hystersis for a group of gpio
- *
- * @brief gpio_input_hysteresis
- * @param group
- * @param state
- */
-void gpio_input_hysteresis(int group, bool state)
-{
-
-}
-
-
-/**
- * Limit a group of GPIO's slew rate
- *
- * @brief gpio_limit_slew_rate
- * @param group
- * @param state
- */
-void gpio_limit_slew_rate(int group, bool state)
-{
-
+    // Assign the new configuration
+    *(pads + group + 11) = config ;
 }
 
 
