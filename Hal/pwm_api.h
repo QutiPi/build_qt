@@ -1,4 +1,6 @@
 #pragma once
+#include <stdint.h>
+#include <stdbool.h>
 
 #include <device.h>
 
@@ -12,6 +14,8 @@ extern "C" {
         mark_space = 0,
     } PwmModes;
 
+    bool pwm_setup();
+
     // Set pwm mode
     void pwm_set_mode(PinName pin, PwmModes mode);
 
@@ -22,7 +26,7 @@ extern "C" {
     void pwm_set_clock(PinName pin, int divisor);
 
     // Set pwm value
-    void pwm_set_value(PinName pin, int value);
+    void pwm_write(PinName pin, int value);
 
 #ifdef __cplusplus
 }

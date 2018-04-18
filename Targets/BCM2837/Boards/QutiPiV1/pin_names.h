@@ -4,9 +4,9 @@
 extern "C" {
 #endif
 
-    // Broadcom port shift
-    #define	PASSWORD 0x5A000000
-    #define	PORT_SHIFT 0x3F000000
+    // Broadcom
+    #define	BCM_PASSWORD 0x5A000000
+    #define	BCM_PORT_SHIFT 0x3F000000
 
     // Port states
     typedef enum {
