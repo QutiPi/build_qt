@@ -6,6 +6,8 @@
 extern "C" {
 #endif
 
+
+
     //Check the pin was not initialized with NC
     int gpio_is_connected(const gpio_t *obj);
 

@@ -8,21 +8,14 @@
 
 
 /**
- * Hold referance to mapped gpio device in memory
+ * Setup the GPIOs for use
+ *
+ * @brief gpio_setup
  */
-static volatile uint32_t *gpio = MAP_FAILED;
-
-
-/**
- * Base address to access the GPIO clock
- */
-static volatile unsigned int gpio_base = BCM_PORT_SHIFT + 0x00200000;
-
-
-/**
- * Define block size
- */
-#define BCM_GPIO_SIZE 0xB4
+void gpio_setup()
+{
+    pinmap_setup();
+}
 
 
 /**
@@ -70,7 +63,7 @@ void gpio_dir(gpio_t *obj, FunctionSelect pin)
  */
 int gpio_read(gpio_t *obj)
 {
-    return (int)gpio;
+    return (int) pinmap;
 }
 
 
