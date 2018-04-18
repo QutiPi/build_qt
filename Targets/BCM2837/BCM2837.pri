@@ -17,7 +17,9 @@ SOURCES += \
     $$PWD/pin_map.c \
     $$PWD/gpio_api.c \
     $$PWD/Device/bcm2837_hal_gpio.c \
-    $$PWD/delay_api.c
+    $$PWD/delay_api.c \
+    $$PWD/gpclk_api.c \
+    $$PWD/time_api.c
 
 # Include the read me files and licensing files
 DISTFILES += \

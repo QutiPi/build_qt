@@ -1,6 +1,8 @@
 #include <stdint.h>
 
 #include <Hal/gpio_api.h>
+#include <Hal/pin_map.h>
+
 
 static volatile int *gpio;
 

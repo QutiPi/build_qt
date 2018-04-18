@@ -7,16 +7,16 @@ extern "C" {
 #endif
 
     // Select the function for a pin
-    void pin_func(PinName pin, FunctionSelect function);
+    void pin_function(PinName pin, FunctionSelect function);
 
     // Return the current pin function
-    FunctionSelect pin_func(PinName pin);
+    FunctionSelect pin_function_current(PinName pin);
 
     // Set pull up down none
     void pin_mode(PinName pin, PinMode mode);
 
     // Return the current pin mode
-    PinMode pin_mode(PinName pin);
+    PinMode pin_mode_current(PinName pin);
 
 #ifdef __cplusplus
 }

@@ -39,9 +39,9 @@ HEADERS += $$PWD/Global.h \
     Hal/delay_api.h \
     Hal/pcm_api.h \
     Hal/pwm_api.h \
-    Hal/timer_api.h \
     Hal/gpio_irq_api.h \
-    Hal/port_api.h
+    Hal/port_api.h \
+    Hal/time_api.h
 
 # Ensure the targets are not included
 #SOURCES -= Targets/*/*.cpp
