@@ -28,6 +28,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 # Include all the source files
 SOURCES += Drivers/DigitalIn.cpp \
+    Hardware/ADC/MCP3424.cpp
 
 # Include all the header files
 HEADERS += $$PWD/Global.h \
@@ -41,7 +42,8 @@ HEADERS += $$PWD/Global.h \
     Hal/pwm_api.h \
     Hal/gpio_irq_api.h \
     Hal/port_api.h \
-    Hal/time_api.h
+    Hal/time_api.h \
+    Hardware/ADC/MCP3424.h
 
 # Ensure the targets are not included
 #SOURCES -= Targets/*/*.cpp

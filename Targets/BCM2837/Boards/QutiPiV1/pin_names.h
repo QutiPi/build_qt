@@ -29,7 +29,6 @@ extern "C" {
         ALT_5  = 2,    // 0b010
     } FunctionSelect;
 
-
     // Define the peripherals @todo assign correct values
     typedef enum
     {
