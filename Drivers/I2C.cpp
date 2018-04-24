@@ -1,11 +1,26 @@
 #include "I2C.h"
 
-#include <linux/i2c-dev.h>
+/*#include <linux/i2c-dev.h>
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <iostream>
+#include <stdexcept>*/
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdexcept>
+#include <errno.h>
+#include <fcntl.h>
+#include <iostream>
+#include <unistd.h>
+#include <sys/ioctl.h>
+#include <linux/i2c-dev.h>
+
+#include <device.h>
+
+#include <bitset>
 
 namespace QutiPi { namespace Drivers
 {
@@ -16,6 +31,32 @@ namespace QutiPi { namespace Drivers
     }
 
 
+    int I2C::configureBus(Device device)
+    {
+        // Open the I2C bus
+        auto bus = open(device.location.c_str(), O_RDWR);
+
+        // Check the bus is open
+        if(bus < 0)
+        {
+            throw std::runtime_error("Failed to open i2c port for read write");
+        }
+
+        // Select the address
+        auto address = ioctl(bus, I2C_SLAVE, device.address);
+
+        // Check the address was set correctly
+        if (address < 0)
+        {
+            throw std::runtime_error("Failed to write to i2c port for writing operation");
+        }
+
+        // Return handler
+        return bus;
+    }
+
+
+
     /**
      * Write a string of bytes to an I2C device
      *
@@ -24,13 +65,19 @@ namespace QutiPi { namespace Drivers
      * @param buf The buffer of bits to write
      * @param length How large is the buffer
      */
-    void writeBytes(I2C device, char buf, char length)
+    void I2C::writeBytes(Device device, char buf, char length)
     {
-        // Open the I2C bus
+        // Setup the bus @todo catch errors
+        auto bus = configureBus(device);
 
-        // Check the device exsists
+        // Attempt to write the buffer to the device
+        if (write(bus, &buf, length) != 1)
+        {
+            throw std::runtime_error("Failed to write to i2c device for write operation");
+        }
 
-        // Write the buffer to the device
+        // Close the bus
+        close(bus);
     }
 
 
@@ -42,18 +89,33 @@ namespace QutiPi { namespace Drivers
      * @param buf the buffer to read into
      * @param length how many bytes to read
      */
-    void readBtyes(I2C device, char buf, char length)
+    char I2C::readBtyes(Device device, char& buf, int length)
     {
-        // Open the I2C bus
+        // Setup the bus @todo catch errors
+        auto bus = configureBus(device);
 
         // Request we want a read
+        do
+        {
+            // Read bus
+            read(bus, &buf, length);
 
-        // Read the response
+            // Check size of buffer
+            if(strlen(&buf) == length)
+                break;
+
+            // Check time out TODO
+
+        } while(true);
+
+        // Close the bus
+        close(bus);
     }
 
 
     /**
      * Update a buffers specific char value
+     *      NOTE: Look at std::bitset as an alternative
      *
      * @brief updateBuffer
      * @param buffer The buffer to update
@@ -61,11 +123,20 @@ namespace QutiPi { namespace Drivers
      * @param bit The bit location in the char to update
      * @param value The value to place in the postion
      */
-    void updateBuffer(char buffer, int id, char bit, char value)
+    char I2C::updateBuffer(char buffer[], int id, char bit, char value)
     {
-        // Is value 0 or 1?
-            // Update for 0
-            // Update for 1
+        if(value == 0)
+        {
+            return (buffer[id] &= ~(1 << bit));
+        }
+        else if(value == 1)
+        {
+            return (buffer[id] |= 1 << bit);
+        }
+        else
+        {
+            throw std::out_of_range("Value must be 0 or 1");
+        }
     }
 
 }}

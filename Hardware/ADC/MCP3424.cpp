@@ -16,7 +16,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
      *
      * @brief MCP3424::MCP3424
      */
-    MCP3424::MCP3424(I2C ic, Bitrate res = Bitrate::Twelve)
+    MCP3424::MCP3424(Device ic, Bitrate res = Bitrate::Twelve)
     {
         // Set up the IC
         setup(ic, res);
@@ -29,10 +29,9 @@ namespace QutiPi { namespace Hardware { namespace ADC
      *
      * @brief MCP3424::~MCP3424
      */
-    MCP3424::~MCP3424(I2C ic)
+    MCP3424::~MCP3424()
     {
-        // Tell everyone we're destorying object
-        std::cout << "Destory MCP3424 location: " << ic.location << " Address:" << ic.address;
+
     }
 
 
@@ -43,7 +42,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
      * @param ic
      * @param res
      */
-    void MCP3424::setup(I2C ic, Bitrate res)
+    void MCP3424::setup(Device ic, Bitrate res)
     {
 
     }
@@ -59,7 +58,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
      */
     int MCP3424::read(Ports port)
     {
-        return 10 + port;
+        return 10;
     }
 
 

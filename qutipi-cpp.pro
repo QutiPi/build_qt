@@ -9,7 +9,7 @@ QT -= gui
 TARGET = qutipi-cpp
 TEMPLATE = lib
 DEFINES += QUTIPI_CPP
-CONFIG += staticlib
+CONFIG += staticlib exceptions
 
 # Disable unused warning parameter
 QMAKE_CXXFLAGS_WARN_OFF -= -Wunused-parameter -Wall
