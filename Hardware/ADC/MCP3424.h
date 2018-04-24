@@ -4,10 +4,13 @@
 
 #include <device.h>
 
-namespace QutiPi { namespace Hardware { namespace Hardware
+#include "Drivers/I2C.h"
+
+
+namespace QutiPi { namespace Hardware { namespace ADC
 {
 
-    class MCP3424
+    class MCP3424 : private Drivers::I2C
     {
         // Allowed bit rates
         enum class Bitrate
@@ -44,11 +47,11 @@ namespace QutiPi { namespace Hardware { namespace Hardware
         };
 
     public:
-        MCP3424(I2C ic);
+        MCP3424(I2C ic, Bitrate res);
         MCP3424::~MCP3424();
 
         // Setup class
-        void setup(I2C ic);
+        void setup(I2C ic, Bitrate res);
 
         // Read voltage level
         int read(Ports port);

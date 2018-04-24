@@ -1,8 +1,13 @@
 #include "MCP3424.h"
 
-#include <QDebug>
+#include <linux/i2c-dev.h>
+#include <sys/ioctl.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <iostream>
 
-namespace QutiPi { namespace Hardware { namespace Hardware
+
+namespace QutiPi { namespace Hardware { namespace ADC
 {
 
     /**
@@ -11,9 +16,10 @@ namespace QutiPi { namespace Hardware { namespace Hardware
      *
      * @brief MCP3424::MCP3424
      */
-    MCP3424::MCP3424(I2C ic)
+    MCP3424::MCP3424(I2C ic, Bitrate res = Bitrate::Twelve)
     {
-        qDebug() << "Init MCP3424 location: " << ic.location << " Address:" << ic.address << " Bitrate: " << NINE;
+        // Set up the IC
+        setup(ic, res);
     }
 
 
@@ -25,11 +31,19 @@ namespace QutiPi { namespace Hardware { namespace Hardware
      */
     MCP3424::~MCP3424(I2C ic)
     {
-        qDebug() << "Destory MCP3424 location: " << ic.location << " Address:" << ic.address;;
+        // Tell everyone we're destorying object
+        std::cout << "Destory MCP3424 location: " << ic.location << " Address:" << ic.address;
     }
 
 
-    void setup(I2C ic, BITRATE bitrate)
+    /**
+     * Setup the IC
+     *
+     * @brief MCP3424::setup
+     * @param ic
+     * @param res
+     */
+    void MCP3424::setup(I2C ic, Bitrate res)
     {
 
     }
@@ -43,7 +57,7 @@ namespace QutiPi { namespace Hardware { namespace Hardware
      *              - from 1:4
      * @return int voltage in digital format
      */
-    int MCP3424::read(int port)
+    int MCP3424::read(Ports port)
     {
         return 10 + port;
     }
