@@ -103,7 +103,8 @@ namespace QutiPi { namespace Drivers
             read(bus, buf, length);
 
             // Check size of buffer
-            if (!(buf[length] & (1 << bitSize)))
+            // if (!(buf[length] & (1 << bitSize)))
+            if ((buf[length] >> 7) == 0)
                 break;
 
             // Check time out TODO

@@ -12,7 +12,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
 
     /**
      * Class constructure performs
-     *      - @todo
+     *      - configures ADC
      *
      * @brief MCP3424::MCP3424
      */
@@ -76,16 +76,28 @@ namespace QutiPi { namespace Hardware { namespace ADC
         // Default the sign bit to false
         signbit = false;
 
-        // Set the channel
-        setChannel(port);
+        // Has the set channel changed?
+        if(m_port != port)
+        {
+            // Set the new channel
+            setChannel(port);
+        }
 
         // If one shot request a read
         if(m_mode == Conversion::Oneshot)
         {
+            // Set the read flag
             m_configuration[0] = updateBuffer(m_configuration, 0, 7, 1);
+
+            // Write the command
             writeBytes(m_ic, *m_configuration, 1);
+
+            // Unset the read flag
             m_configuration[0] = updateBuffer(m_configuration, 0, 7, 0);
         }
+
+        // Request data
+        writeBytes(m_ic, *m_configuration, 1);
 
         // Read & convert the data
         switch(m_resolution)
@@ -119,7 +131,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
                 break;
             case Bitrate::Eighteen:
                 readBtyes(m_ic, buffer, 3);
-                value = ((buffer[0] & 3) << 16) | (buffer[1] << 8) | buffer[2];
+                value = ((buffer[0] & 0x03) << 16) | (buffer[1] << 8) | buffer[2];
                 if ((value >> 17) & 1)
                 {
                     signbit = true;
@@ -135,10 +147,9 @@ namespace QutiPi { namespace Hardware { namespace ADC
         // Convert raw digital value to the voltage
         double convert = voltage(value, signbit);
 
-        if(type == Type::VoltageSigleEnded)
-            return convert * 2;
-
-        return convert;
+        // If single ended we need to double the voltage calculation
+        // If differential reading we can return the standard voltage calculation
+        return (type == Type::VoltageSigleEnded) ? convert * 2 : convert ;
     }
 
 
@@ -149,7 +160,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
      * @param digital
      * @return
      */
-    double MCP3424::voltage(long digital, bool useSign)
+    double MCP3424::voltage(int digital, bool useSign)
     {
         if(useSign)
         {
@@ -206,25 +217,28 @@ namespace QutiPi { namespace Hardware { namespace ADC
         // Update the current channel cache
         m_resolution = res;
 
+        // Select which lsb to use
+        Lsb t_lsb;
+
         switch(res)
         {
             case Bitrate::Twelve:
-                m_lsb = Lsb.Twelve;
+                m_lsb = (double) t_lsb.Twelve;
                 m_configuration[0] = updateBuffer(m_configuration, 0, 2, 0);
                 m_configuration[0] = updateBuffer(m_configuration, 0, 3, 0);
                 break;
             case Bitrate::Fourteen:
-                m_lsb = Lsb.Fourteen;
+                m_lsb = (double) t_lsb.Fourteen;
                 m_configuration[0] = updateBuffer(m_configuration, 0, 2, 1);
                 m_configuration[0] = updateBuffer(m_configuration, 0, 3, 0);
                 break;
             case Bitrate::Sixteen:
-                m_lsb = Lsb.Sixteen;
+                m_lsb = (double) t_lsb.Sixteen;
                 m_configuration[0] = updateBuffer(m_configuration, 0, 2, 0);
                 m_configuration[0] = updateBuffer(m_configuration, 0, 3, 1);
                 break;
             case Bitrate::Eighteen:
-                m_lsb = Lsb.Eighteen;
+                m_lsb = (double) t_lsb.Eighteen;
                 m_configuration[0] = updateBuffer(m_configuration, 0, 2, 1);
                 m_configuration[0] = updateBuffer(m_configuration, 0, 3, 1);
                 break;

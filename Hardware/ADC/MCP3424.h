@@ -69,7 +69,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
         double read(Port port, Type type);
 
         // Convert to voltage
-        double voltage(long digital, bool useSign);
+        double voltage(int digital, bool useSign);
 
     private:
         // Current status of IC
@@ -91,7 +91,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
              double Fourteen = 0.000125;
              double Sixteen = 0.00003125;
              double Eighteen = 0.0000078125;
-        } Lsb;
+        };
 
         // Device configuration
         void setChannel(Port port);
