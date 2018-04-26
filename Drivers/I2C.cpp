@@ -21,6 +21,8 @@
 #include <device.h>
 
 #include <bitset>
+#include <QDebug>
+
 
 namespace QutiPi { namespace Drivers
 {
@@ -65,7 +67,7 @@ namespace QutiPi { namespace Drivers
      * @param buf The buffer of bits to write
      * @param length How large is the buffer
      */
-    void I2C::writeBytes(Device device, char buf, char length)
+    void I2C::writeBytes(Device device, char &buf, int length)
     {
         // Setup the bus @todo catch errors
         auto bus = configureBus(device);
@@ -89,7 +91,7 @@ namespace QutiPi { namespace Drivers
      * @param buf the buffer to read into
      * @param length how many bytes to read
      */
-    char I2C::readBtyes(Device device, char& buf, int length)
+    char I2C::readBtyes(Device device, char* buf, int length)
     {
         // Setup the bus @todo catch errors
         auto bus = configureBus(device);
@@ -98,10 +100,10 @@ namespace QutiPi { namespace Drivers
         do
         {
             // Read bus
-            read(bus, &buf, length);
+            read(bus, buf, length);
 
             // Check size of buffer
-            if(strlen(&buf) == length)
+            if (!(buf[length] & (1 << bitSize)))
                 break;
 
             // Check time out TODO

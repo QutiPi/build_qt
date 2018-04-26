@@ -39,7 +39,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
         };
 
         // Allowed ports
-        enum class Ports
+        enum class Port
         {
             One = 1,
             Two = 2,
@@ -47,43 +47,58 @@ namespace QutiPi { namespace Hardware { namespace ADC
             Four = 4,
         };
 
+        // Read types
+        enum class Type
+        {
+            Digital,
+            Voltage,
+            VoltageSigleEnded
+        };
+
         // Class setup and destory
-        MCP3424(Device ic, Bitrate res);
+        MCP3424(Device ic);
         ~MCP3424();
 
         // Standard device type
         using Drivers::I2C::Device;
 
         // Setup class
-        void setup(Device ic, Bitrate res);
+        void configure(Port port, Bitrate res, Conversion mode, Gain gain);
 
         // Read voltage level
-        int read(Ports port);
+        double read(Port port, Type type);
 
-        // Device configuration
-        void setResolution(Bitrate res);
-        void setConversion(Conversion mode);
-        void setGain(Gain gain);
+        // Convert to voltage
+        double voltage(long digital, bool useSign);
 
     private:
         // Current status of IC
         bool signbit = false;
-        Drivers::I2C::Device ic;
-        Bitrate resolution;
-        Conversion mode;
-        Gain gain;
+        double m_lsb = 0;
+        Drivers::I2C::Device m_ic;
+        Bitrate m_resolution;
+        Conversion m_mode;
+        Gain m_gain;
+        Port m_port;
 
         // The bitwise config
-        char configuration;
+        char m_configuration[1];
 
         // Charactrisation
-        struct lsb
+        struct Lsb
         {
              double Twelve = 0.0005;
              double Fourteen = 0.000125;
              double Sixteen = 0.00003125;
              double Eighteen = 0.0000078125;
-        };
+        } Lsb;
+
+        // Device configuration
+        void setChannel(Port port);
+        void setResolution(Bitrate res);
+        void setConversion(Conversion mode);
+        void setGain(Gain gain);
+
 
     };
 }}}

@@ -17,13 +17,15 @@ namespace QutiPi { namespace Drivers
                 char address;
             };
 
+            int bitSize = 7;
+
             I2C();
 
             int configureBus(Device device);
 
-            void writeBytes(Device device, char buf, char length);
+            void writeBytes(Device device, char& buf, int length);
 
-            char readBtyes(Device device, char& buf, int length);
+            char readBtyes(Device device, char *buf, int length);
 
             char updateBuffer(char buffer[], int id, char bit, char value);
 
