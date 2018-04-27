@@ -1,22 +1,49 @@
-# Quti Pi C++
+# QutiPi C++
 
-This project contains a Qt shared library which is a set of C++ classes that aid in using the functionality  / control of QutiPi, additional ICs and modules.
+QutiPi C++ is an opensource embedded framework to aid in creating programs on embedded platforms.
+The main goal is to allow easy control of IC peritherals and communication with remote on board ICs.
 
-More documentation to follow as features are wrote.
+## Why?
 
-## Library Aims
+There are many different C++ libraries out there for the Pi specifically however the over all architecture makes them difficult to understand and expand.
 
-The main aim of the library is to help in the following areas
+The architecture of QutiPi-C++ allows addtional ICs and boards to be intergrated with ease while each implimenation is seperate from each other.
 
-  * Setup and control of peripherals on the raspberry pi compute module 3
+Each processir and board implimenation must apply to a stand HAL interface which allows standard C++ wrappers / drivers.
+
+The end user will use the C++ drivers allowing them to have a standard interface for all processors and boards.
+
+More details to follow.
+
+## Processor Support
+
+Current embedded proccessors supported:
+
+  * Raspberry Pi CM3
+
+
+## External IC Support
+
+List of currently support external ICs
+
+  * MCP3424
+
+## Goals
+
+The main goals for this library over the next 6 months is to impliment
+
+  * Setup and control of all peripherals on the raspberry pi compute module 3
     * SPI
-    * I2C
-    * Serial not included (using QSerial)
+    * Delay (completed)
+    * I2C (completed)
+    * Time (completed)
+    * DMA
+    * GPCLK (semi-completed)
     * GPIO
     * PWM
   * Setup and control of ICs and modules
     * Analogue to Digital Controllers
-      * MCP3424
+      * MCP3424 (completed)
     * Digital to Analogue Controllers
       * AD5669
     * Pulse With Modulation Controllers
@@ -39,6 +66,14 @@ Noting the main difference betwen sytax for C vs C++, for example for function /
 ## Developed by, Helped By and Supported by
 
 This version of the QutiPi C++ was developed by Sam Mottley at the The University of Manchester's, Electronics Section (JFET Services).
+
+### Suggestions
+
+This library is currently limited in functionality so i suggest you check out the below for more established libraries.
+
+  * [WiringPi](http://wiringpi.com/)
+  * [PiGPIO](http://abyz.me.uk/rpi/pigpio/)
+
 
 ## License
 

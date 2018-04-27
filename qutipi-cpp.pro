@@ -53,4 +53,4 @@ HEADERS += $$PWD/Global.h \
 
 # Include the read me files and licensing files
 DISTFILES += \
-    $$PWD/readme.md
+    README.md
