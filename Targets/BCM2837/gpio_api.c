@@ -1,10 +1,4 @@
-#include <stdint.h>
-#include <stdbool.h>
-#include <fcntl.h>
-#include <sys/mman.h>
-
 #include <Hal/gpio_api.h>
-#include <Hal/pin_map.h>
 
 
 /**
@@ -63,7 +57,7 @@ void gpio_dir(gpio_t *obj, FunctionSelect pin)
  */
 int gpio_read(gpio_t *obj)
 {
-    return (int) pinmap;
+    return (int) 1;
 }
 
 

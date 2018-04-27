@@ -1,12 +1,21 @@
 #pragma once
 
+#include <stdint.h>
+#include <stdbool.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+
 #include <device.h>
+
+#include <Hal/pin_map.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-
+    // Pin map will provide the following variables
+    extern uint32_t * pinmap;
+    extern unsigned int gpio_base;
 
     //Check the pin was not initialized with NC
     int gpio_is_connected(const gpio_t *obj);
