@@ -5,7 +5,7 @@
 
 #include <Hal/pin_map.h>
 #include <pin_names.h>
-#include <Hal/delay_api.h>.h>
+#include <Hal/delay_api.h>
 
 /**
  * Hold referance to mapped gpio device in memory
@@ -40,7 +40,7 @@ static volatile PinMode *pin_modes_cache[54];
  *
  * @brief pinmap_setup
  */
-void pinmap_setup()
+bool pinmap_setup()
 {
     // Release memory if range more than once
     if(pinmap != MAP_FAILED)
@@ -80,7 +80,7 @@ void pin_function(PinName pin, FunctionSelect function)
     int shift = (pin % 10) * 3;
 
     // What is the current function?
-    int current = (*(pinmap + reg) >> shift) & 7;
+    unsigned int current = (*(pinmap + reg) >> shift) & 7;
 
     // If the function is different change it
     if(function != current)

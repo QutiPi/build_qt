@@ -20,20 +20,41 @@ void gpio_setup()
  */
 void gpio_init(gpio_t *obj, PinName pin)
 {
-    // gpio = (int *)102;
-    // return (int)gpio;
+    // Fill the gpio object
+    obj->pin = pin;
+
+    // If pin is not connected end here
+    if (pin == (PinName) NC) {
+        return;
+    }
+
+    // Fill object with addtional required info
+}
+
+
+/**
+ * Set the function of the pin
+ *
+ * @brief gpio_set
+ * @param obj
+ * @param mode
+ */
+void gpio_set(gpio_t *obj, FunctionSelect function)
+{
+    pin_function(obj->pin, function);
 }
 
 
 /**
  * Set the pin mode
+ *      - Pull up, pull down, none etc
  *
  * @brief gpio_mode
  * @return
  */
 void gpio_mode(gpio_t *obj, PinMode mode)
 {
-
+    pin_mode(obj->pin, mode);
 }
 
 
@@ -42,9 +63,16 @@ void gpio_mode(gpio_t *obj, PinMode mode)
  *
  * @brief gpio_dir
  */
-void gpio_dir(gpio_t *obj, FunctionSelect pin)
+void gpio_dir(gpio_t *obj, PinDirection pin)
 {
-
+    if(pin == PIN_INPUT)
+    {
+       pin_function(obj->pin, INPUT);
+    }
+    else if(pin == PIN_OUTPUT)
+    {
+        pin_function(obj->pin, OUTPUT);
+    }
 }
 
 

@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
     // Setup GPIO for use
-    void pinmap_setup();
+    bool pinmap_setup();
 
 
     // Select the function for a pin

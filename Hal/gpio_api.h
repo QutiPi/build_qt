@@ -27,7 +27,7 @@ extern "C" {
     void gpio_mode(gpio_t *obj, PinMode mode);
 
     // Set if the pin is an input or output
-    void gpio_func(gpio_t *obj, FunctionSelect pin);
+    void gpio_set(gpio_t *obj, FunctionSelect pin);
 
     // Read value from the gpio pin
     int gpio_read(gpio_t *obj);

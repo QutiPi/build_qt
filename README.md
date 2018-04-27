@@ -41,6 +41,20 @@ The main goals for this library over the next 6 months is to impliment
     * GPCLK (semi-completed)
     * GPIO
     * PWM
+  * Standard driver to controller the IC using C++ classes
+    * PwmOut
+    * HwClock
+    * Timer
+    * DigitalIn
+    * DigitalOut
+    * Interrupt
+    * SPI
+    * I2C (completed)
+  * Platform helps in application development using C++ classes
+    * Wait
+    * Time
+    * NonCopyable
+    * CircularBuffer
   * Setup and control of ICs and modules
     * Analogue to Digital Controllers
       * MCP3424 (completed)

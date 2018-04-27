@@ -16,6 +16,13 @@ extern "C" {
     } PinMode;
 
 
+    // Pin directions
+    typedef enum {
+        PIN_INPUT = 0,    // 0b000
+        PIN_OUTPUT = 1,   // 0b001
+    } PinDirection;
+
+
     // Define the possiable alternative functions
     typedef enum
     {
@@ -183,12 +190,6 @@ extern "C" {
         FunctionPeripherals peripheral;
         FunctionSelect function;
     } PinMap;
-
-    /*typedef struct {
-        PinName  pin;
-        uint8_t mode;
-        uint8_t direction;
-    } gpio_t;*/
 
 #ifdef __cplusplus
 }
