@@ -76,7 +76,7 @@ void pin_function(PinName pin, FunctionSelect function)
     if(function != current)
     {
         // Set the new function
-        (*(pinmap + reg) & ~(7 << shift)) | (function << shift);
+        *(pinmap + reg) = (*(pinmap + reg) & ~(7 << shift)) | (function << shift);
     }
 }
 
