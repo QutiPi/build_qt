@@ -1,10 +1,20 @@
 #pragma once
+#include <stdint.h>
+#include <stdbool.h>
+#include <fcntl.h>
+#include <sys/mman.h>
 
 #include <device.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+    // Hold referance to mapped gpio device in memory
+    extern uint32_t * pinmap;
+
+    // Base address to access the GPIO clock
+    extern unsigned int gpio_base;
 
     // Setup GPIO for use
     bool pinmap_setup();

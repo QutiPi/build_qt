@@ -6,16 +6,21 @@
 #include <sys/mman.h>
 
 #include <device.h>
-
 #include <Hal/pin_map.h>
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-    // Pin map will provide the following variables
+    // Hold referance to mapped gpio device in memory
     extern uint32_t * pinmap;
+
+    // Base address to access the GPIO clock
     extern unsigned int gpio_base;
+
+    // Setup gpio
+    void gpio_setup();
 
     //Check the pin was not initialized with NC
     int gpio_is_connected(const gpio_t *obj);

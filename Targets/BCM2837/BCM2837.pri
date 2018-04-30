@@ -22,7 +22,8 @@ SOURCES += \
     $$PWD/time_api.c \
     $$PWD/pwm_api.c \
     $$PWD/dma_api.c \
-    $$PWD/pcm_api.c
+    $$PWD/pcm_api.c \
+    $$PWD/device.c
 
 # Include the read me files and licensing files
 DISTFILES += \

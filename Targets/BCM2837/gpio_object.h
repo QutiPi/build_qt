@@ -10,7 +10,7 @@ extern "C" {
 
     // @todo
     typedef struct {
-        PinName  pin;
+        PinName pin;
     } gpio_t;
 
 

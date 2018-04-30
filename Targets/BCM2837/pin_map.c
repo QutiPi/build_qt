@@ -1,21 +1,9 @@
-#include <stdint.h>
-#include <stdbool.h>
-#include <fcntl.h>
-#include <sys/mman.h>
-
-#include <Hal/pin_map.h>
 #include <pin_names.h>
+#include <Hal/pin_map.h>
 #include <Hal/delay_api.h>
+#include <device.h>
+#include <stdio.h>
 
-/**
- * Hold referance to mapped gpio device in memory
- */
-static volatile uint32_t * pinmap = MAP_FAILED;
-
-/**
- * Base address to access the GPIO clock
- */
-static volatile unsigned int gpio_base = BCM_PORT_SHIFT + 0x00200000;
 
 /**
  * Define block size
@@ -32,7 +20,7 @@ static volatile unsigned int gpio_base = BCM_PORT_SHIFT + 0x00200000;
 /**
  * Save the pin mode manual as read backs are not possiable
  */
-static volatile PinMode *pin_modes_cache[54];
+volatile PinMode *pin_modes_cache[54];
 
 
 /**
@@ -43,7 +31,7 @@ static volatile PinMode *pin_modes_cache[54];
 bool pinmap_setup()
 {
     // Release memory if range more than once
-    if(pinmap != MAP_FAILED)
+    if(pinmap != MAP_FAILED || pinmap != NULL)
         munmap((void *)pinmap, BCM_GPIO_SIZE);
 
     // Handler
@@ -143,7 +131,7 @@ void pin_mode(PinName pin, PinMode mode)
     *(pinmap + GPPUDCLK0 + (pin >> 5)) = 0;
 
     // Save the pin mode
-    *pin_modes_cache[pin] = mode;
+    pin_modes_cache[(int) pin] = &mode;
 }
 
 /**

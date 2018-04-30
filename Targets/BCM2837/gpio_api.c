@@ -1,5 +1,17 @@
 #include <Hal/gpio_api.h>
 
+#include <stdio.h>
+
+
+/**
+ * Related registers
+ */
+#define GPSET0     7
+#define GPSET1     8
+
+#define GPCLR0    10
+#define GPCLR1    11
+
 
 /**
  * Setup the GPIOs for use
@@ -41,6 +53,7 @@ void gpio_init(gpio_t *obj, PinName pin)
  */
 void gpio_set(gpio_t *obj, FunctionSelect function)
 {
+    // Set the pin function
     pin_function(obj->pin, function);
 }
 
@@ -97,5 +110,20 @@ int gpio_read(gpio_t *obj)
  */
 void gpio_write(gpio_t *obj, int value)
 {
+    // Set pin
+    int pin = obj->pin;
 
+    // Pin bank
+    int bank = (pin >> 5);
+
+    // Low or high?
+    if (value == 0)
+    {
+        *(pinmap + 10 + bank) = 1 << (pin & 31);
+    }
+    else
+    {
+        // Pin map base + GPIO Set Reg 0 + Offset if Reg 1 Depending on gpio
+        *(pinmap + 7 + bank) = 1 << (pin & 31) ;
+    }
 }
