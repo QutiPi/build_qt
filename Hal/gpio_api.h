@@ -31,6 +31,9 @@ extern "C" {
     // Set the pin mode (Up, Down, None)
     void gpio_mode(gpio_t *obj, PinMode mode);
 
+    // Set pin direction
+    void gpio_dir(gpio_t *obj, PinDirection pin);
+
     // Set if the pin is an input or output
     void gpio_set(gpio_t *obj, FunctionSelect pin);
 

@@ -8,7 +8,9 @@
 /**
  * Define block size
  */
-#define BCM_GPIO_SIZE 0xB4
+// #define BCM_GPIO_SIZE 0xB4
+#define BCM_GPIO_SIZE (4*1024)
+
 
 /**
  * Related registers

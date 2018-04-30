@@ -119,11 +119,11 @@ void gpio_write(gpio_t *obj, int value)
     // Low or high?
     if (value == 0)
     {
-        *(pinmap + 10 + bank) = 1 << (pin & 31);
+        *(pinmap + GPCLR0 + bank) = 1 << (pin & 31);
     }
     else
     {
         // Pin map base + GPIO Set Reg 0 + Offset if Reg 1 Depending on gpio
-        *(pinmap + 7 + bank) = 1 << (pin & 31) ;
+        *(pinmap + GPSET0 + bank) = 1 << (pin & 31) ;
     }
 }

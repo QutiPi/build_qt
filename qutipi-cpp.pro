@@ -45,7 +45,9 @@ HEADERS += $$PWD/Global.h \
     Hal/port_api.h \
     Hal/time_api.h \
     Hardware/ADC/MCP3424.h \
-    Drivers/I2C.h
+    Drivers/I2C.h \
+    Drivers/DigitalOut.h \
+    QutiPi.h
 
 # Ensure the targets are not included
 #SOURCES -= Targets/*/*.cpp
