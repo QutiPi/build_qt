@@ -12,6 +12,9 @@
 #define GPCLR0    10
 #define GPCLR1    11
 
+#define GPLEV0    13
+#define GPLEV1    14
+
 
 /**
  * Setup the GPIOs for use
@@ -98,7 +101,19 @@ void gpio_dir(gpio_t *obj, PinDirection pin)
  */
 int gpio_read(gpio_t *obj)
 {
-    return (int) 1;
+    // Set pin
+    int pin = obj->pin;
+
+    // Pin bank
+    int bank = (pin >> 5);
+
+    // Check level register
+    if ((*(pinmap + GPLEV0 + bank) & (1 << (pin & 31))) != 0)
+    {
+        return 1;
+    }
+
+    return 0;
 }
 
 
