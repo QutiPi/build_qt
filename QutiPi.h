@@ -26,6 +26,19 @@
 
 
 /**
+ * Exit, cleanup qutipi
+ *
+ * @brief qutipi_exit
+ */
+void qutipi_exit()
+{
+    // Cleanup device memory mappings
+    pinmap_destory();
+    gpclk_destory();
+    pwm_destory();
+}
+
+/**
  * Configures and sets up QutiPi framework
  *
  * @brief setup
@@ -34,4 +47,12 @@ void qutipi_setup()
 {
     // Setup device memory mappings
     gpio_setup();
+    gpclk_setup();
+    pwm_setup();
+
+    // Define the exit function
+    atexit(qutipi_exit);
 }
+
+
+

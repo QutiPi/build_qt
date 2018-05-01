@@ -5,19 +5,6 @@
 
 #include <Hal/pwm_api.h>
 
-
-/**
- * Hold referance to mapped pwm device in memory
- */
-static volatile uint32_t *pwm = MAP_FAILED;
-
-
-/**
- * Base address to access the pwm
- */
-static volatile unsigned int pwm_base = BCM_PORT_SHIFT + 0x0020C000;
-
-
 /**
  * Define block size
  */
@@ -60,6 +47,18 @@ static volatile unsigned int pwm_base = BCM_PORT_SHIFT + 0x0020C000;
  * @return
  */
 bool pwm_setup()
+{
+
+}
+
+
+/**
+ * Destory PWM
+ *
+ * @brief pwm_destory
+ * @return
+ */
+bool pwm_destory()
 {
 
 }

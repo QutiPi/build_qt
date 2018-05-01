@@ -19,6 +19,9 @@ extern "C" {
     // Setup GPIO for use
     bool pinmap_setup();
 
+    // Cleanup
+    void pinmap_destory();
+
 
     // Select the function for a pin
     void pin_function(PinName pin, FunctionSelect function);

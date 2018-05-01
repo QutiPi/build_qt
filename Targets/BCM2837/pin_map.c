@@ -55,6 +55,19 @@ bool pinmap_setup()
 
 
 /**
+ * Cleanup pin mappings
+ *
+ * @brief pinmap_destory
+ */
+void pinmap_destory()
+{
+    // Release memory if range more than once
+    if(pinmap != MAP_FAILED || pinmap != NULL)
+        munmap((void *)pinmap, BCM_GPIO_SIZE);
+}
+
+
+/**
  * Select which function the pin is to be used for
  *
  * @brief pin_function
