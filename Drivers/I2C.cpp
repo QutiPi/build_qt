@@ -20,8 +20,7 @@
 
 #include <device.h>
 
-#include <bitset>
-#include <QDebug>
+#include <Hal/time_api.h>
 
 
 namespace QutiPi { namespace Drivers
@@ -96,6 +95,9 @@ namespace QutiPi { namespace Drivers
         // Setup the bus @todo catch errors
         auto bus = configureBus(device);
 
+        // Starting time
+        int startingTime = current_time(MS);
+
         // Request we want a read
         do
         {
@@ -104,10 +106,12 @@ namespace QutiPi { namespace Drivers
 
             // Check size of buffer
             // if (!(buf[length] & (1 << bitSize)))
-            if ((buf[length] >> 7) == 0)
+            if ((buf[length] >> bitSize) == 0)
                 break;
 
-            // Check time out TODO
+            // Check time out
+            if((current_time(MS) - startingTime) > device.timeout)
+                break;
 
         } while(true);
 

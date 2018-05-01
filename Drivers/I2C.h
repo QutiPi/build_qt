@@ -15,6 +15,7 @@ namespace QutiPi { namespace Drivers
             struct Device{
                 std::string location;
                 char address;
+                int timeout = 1000;
             };
 
             int bitSize = 7;
