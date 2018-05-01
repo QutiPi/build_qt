@@ -23,7 +23,7 @@ namespace QutiPi { namespace Drivers
             gpio_set(&gpio, OUTPUT);
 
             // Set mode (pull up, down, none)
-            gpio_mode(&gpio, NONE);
+            gpio_mode(&gpio, PullNone);
         }
 
 
@@ -40,7 +40,7 @@ namespace QutiPi { namespace Drivers
             gpio_write(&gpio, value);
 
             // Set mode (pull up, down, none)
-            gpio_mode(&gpio, NONE);
+            gpio_mode(&gpio, PullNone);
 
             // Set the function (input, output, SDA etc)
             gpio_set(&gpio, OUTPUT);

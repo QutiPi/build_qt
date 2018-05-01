@@ -27,7 +27,7 @@ include(Targets/$${TARGETSOC}/$${TARGETSOC}.pri)
 DEFINES += QT_DEPRECATED_WARNINGS
 
 # Include all the source files
-SOURCES += Drivers/DigitalIn.cpp \
+SOURCES += \
     Hardware/ADC/MCP3424.cpp \
     Drivers/I2C.cpp
 

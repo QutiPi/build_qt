@@ -10,9 +10,9 @@ extern "C" {
 
     // Port states
     typedef enum {
-        NONE = 0,           // 0b00
-        DOWN = 1,           // 0b01
-        UP   = 2,           // 0b10
+        PullNone = 0,           // 0b00
+        PullDown = 1,           // 0b01
+        PullUp   = 2,           // 0b10
     } PinMode;
 
 
