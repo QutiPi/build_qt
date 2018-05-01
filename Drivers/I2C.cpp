@@ -105,7 +105,6 @@ namespace QutiPi { namespace Drivers
             read(bus, buf, length);
 
             // Check size of buffer
-            // if (!(buf[length] & (1 << bitSize)))
             if ((buf[length] >> bitSize) == 0)
                 break;
 
