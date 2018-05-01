@@ -29,6 +29,9 @@ extern "C" {
     // Return the current pin function
     FunctionSelect pin_function_current(PinName pin);
 
+    // Asset that the pin is allowed the current function
+    FunctionPeripherals assert_functionality(PinName pin, FunctionSelect function);
+
 
     // Set pull up down none
     void pin_mode(PinName pin, PinMode mode);

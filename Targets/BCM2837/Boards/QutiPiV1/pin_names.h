@@ -39,33 +39,36 @@ extern "C" {
     // Define the peripherals @todo assign correct values
     typedef enum
     {
+        // General purpose io
+        GPIO = 0,
+
         // SPI Buses
-        SPI_0  = 0,
-        SPI_1  = 1,
-        SPI_2  = 2,
+        SPI_0  = 1,
+        SPI_1  = 2,
+        SPI_2  = 3,
 
         // I2C Buses
-        I2C_0  = 3,
-        I2C_1  = 4,
+        I2C_0  = 4,
+        I2C_1  = 5,
 
         // PWM Controllers
-        PWM_0  = 5,
-        PWM_1  = 6,
+        PWM_0  = 6,
+        PWM_1  = 7,
 
         // UART Hardware
-        UART_0  = 7,
-        UART_1  = 8,
+        UART_0  = 8,
+        UART_1  = 9,
 
         // I2S/ PCM Controllers
-        PCM_0 = 9,
+        PCM_0 = 10,
 
         // General purpose clock controller
-        GPCLK_0 = 10,
-        GPCLK_1 = 11,
-        GPCLK_2 = 12,
+        GPCLK_0 = 11,
+        GPCLK_1 = 12,
+        GPCLK_2 = 13,
 
         // SDIO controller
-        SDIO_1 = 13,
+        SDIO_1 = 14,
 
         // Below should not need mappings but keep in mind for now
         // DMA Controllers

@@ -161,3 +161,20 @@ PinMode pin_mode_current(PinName pin)
     return *pin_modes_cache[pin];
 }
 
+
+/**
+ * Check peripheral pins mappings to ensure pin has selected alternative function
+ *   and return the function ID
+ *
+ * @TODO
+ * @brief assert_functionality
+ * @param pin
+ * @param function
+ * @return
+ */
+FunctionPeripherals assert_functionality(PinName pin, FunctionSelect function)
+{
+    return GPIO;
+}
+
+
