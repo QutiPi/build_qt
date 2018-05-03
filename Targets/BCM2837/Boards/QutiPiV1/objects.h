@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 #include "pin_names.h"
 #include "port_names.h"
 

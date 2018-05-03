@@ -107,8 +107,6 @@ int gpio_read(gpio_t *obj)
     // Pin bank
     int bank = (pin >> 5);
 
-    printf("Reading Pin: %d \r", pin);
-
     // Check level register
     if ((*(pinmap + GPLEV0 + bank) & (1 << (pin & 31))) != 0)
     {
@@ -132,8 +130,6 @@ void gpio_write(gpio_t *obj, int value)
 
     // Pin bank
     int bank = (pin >> 5);
-
-    printf("Writing Pin: %d \r", pin);
 
     // Low or high?
     if (value == 0)

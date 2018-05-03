@@ -36,6 +36,7 @@ void qutipi_exit()
     pinmap_destory();
     gpclk_destory();
     pwm_destory();
+    gpio_irq_destory();
 }
 
 /**
@@ -49,6 +50,7 @@ void qutipi_setup()
     gpio_setup();
     gpclk_setup();
     pwm_setup();
+    gpio_irq_setup();
 
     // Define the exit function
     atexit(qutipi_exit);

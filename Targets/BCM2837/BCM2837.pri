@@ -23,7 +23,8 @@ SOURCES += \
     $$PWD/pwm_api.c \
     $$PWD/dma_api.c \
     $$PWD/pcm_api.c \
-    $$PWD/device.c
+    $$PWD/device.c \
+    $$PWD/gpio_irq_api.c
 
 # Include the read me files and licensing files
 DISTFILES += \
