@@ -12,9 +12,6 @@ extern "C" {
      */
     typedef struct gpio_irq_s gpio_irq_t;
 
-    // Declears in objects.h
-    // typedef void (*gpio_irq_handler)(PinName pin, gpio_irq_event event);
-
 
     /**
      * Setup the iqr functionality

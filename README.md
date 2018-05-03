@@ -56,7 +56,7 @@ The main goals for this library over the next 6 months is to impliment
     * Time
     * NonCopyable
     * CircularBuffer
-    * CallBack
+    * CallBack (completed[Modifed mbed Implimenation])
   * Setup and control of ICs and modules
     * Analogue to Digital Controllers
       * MCP3424 (completed)
@@ -85,8 +85,9 @@ This version of the QutiPi C++ was developed by Sam Mottley at the The Universit
 
 ### Suggestions
 
-This library is currently limited in functionality so i suggest you check out the below for more established libraries.
+This library does its best to minic the ARMmbed project to reduce learn curve.
 
+If you after libraries with more functionality but less structure check out the below. They were also helpful in the creation of this library.
   * [WiringPi](http://wiringpi.com/)
   * [PiGPIO](http://abyz.me.uk/rpi/pigpio/)
 

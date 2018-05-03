@@ -29,7 +29,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # Include all the source files
 SOURCES += \
     Hardware/ADC/MCP3424.cpp \
-    Drivers/I2C.cpp
+    Drivers/I2C.cpp \
+    Drivers/InterruptIn.cpp
 
 # Include all the header files
 HEADERS += $$PWD/Global.h \
@@ -47,7 +48,11 @@ HEADERS += $$PWD/Global.h \
     Hardware/ADC/MCP3424.h \
     Drivers/I2C.h \
     Drivers/DigitalOut.h \
-    QutiPi.h
+    QutiPi.h \
+    Drivers/InterruptIn.h \
+    Platform/Platform.h \
+    Platform/Callback.h \
+    Platform/NonCopyable.h
 
 # Ensure the targets are not included
 #SOURCES -= Targets/*/*.cpp

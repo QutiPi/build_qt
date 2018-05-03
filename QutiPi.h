@@ -21,9 +21,10 @@
 #include "Drivers/I2C.h"
 #include "Drivers/DigitalIn.h"
 #include "Drivers/DigitalOut.h"
+#include "Drivers/InterruptIn.h"
 
 // Include Platform
-
+#include "Platform/Platform.h"
 
 /**
  * Exit, cleanup qutipi

@@ -46,7 +46,7 @@ static pthread_mutex_t monitor_mutex;
 static gpio_irq_handler irq_handler;
 
 // Hold all interrupts that should be monitored
-gpio_irq_t monitors[64];
+gpio_irq_t monitors[46];
 
 
 /**
@@ -61,7 +61,7 @@ static int *pthIrqThread()
     uint8_t c;
 
     // Get any changes
-    gpio_irq_t local[64];
+    gpio_irq_t local[46];
 
     // Monitor for interrupts
     while(true)
@@ -73,7 +73,7 @@ static int *pthIrqThread()
         // For each possiable interrupt
         int i = 0;
 
-        for(i; i < 64; i++)
+        for(i; i < 46; i++)
         {
             // If not acive no need to check
             if(!local[i].active)
@@ -83,7 +83,7 @@ static int *pthIrqThread()
             x = poll(&local[i].pfd, 1, local[i].timeout);
 
             // If file has data
-            if (x > 0)
+            if(x > 0)
             {
                 // Rewind
                 lseek(local[i].pfd.fd, 0, SEEK_SET);
@@ -92,7 +92,7 @@ static int *pthIrqThread()
                 (void)read(local[i].pfd.fd, &c, 1);
 
                 // Run function
-                local[i].handler(local[i].pin, local[i].event);
+                local[i].handler(local[i].objectId, local[i].event);
             }
         }
 
@@ -207,7 +207,7 @@ int gpio_irq_init(gpio_irq_t *obj, PinName pin, gpio_irq_handler handler, uint32
 
     // Set the return function
     obj->handler = handler;
-    obj->object = id;
+    obj->objectId = id;
 
     obj->active = false;
     obj->timeout = 0;
