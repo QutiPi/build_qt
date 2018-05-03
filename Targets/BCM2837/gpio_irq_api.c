@@ -34,6 +34,7 @@
 #include <sys/poll.h>
 #include <string.h>
 #include <fcntl.h>
+#include <sys/unistd.h>
 
 
 // Monitoring thread
@@ -42,17 +43,6 @@ static volatile int monitor_status = 1;
 static pthread_mutex_t monitor_mutex;
 
 static gpio_irq_handler irq_handler;
-
-// Interrupt type
-struct gpio_irq_s {
-    PinName pin;
-    gpio_irq_handler handler;
-    uint32_t object;
-    gpio_irq_event event;
-    bool active;
-    int timeout;
-    struct pollfd pfd;
-};
 
 // Hold all interrupts that should be monitored
 gpio_irq_t monitors[64];
@@ -63,33 +53,37 @@ gpio_irq_t monitors[64];
  *
  * @brief pthIrqThread
  */
-static int pthIrqThread()
+static int *pthIrqThread()
 {
     // Init vars
     int x;
     uint8_t c;
 
+    // printf("Thread running \r");
+
     // Set pirority
+
+    // Get any changes
+    gpio_irq_t local[64];
 
     // Monitor for interrupts
     while(true)
     {
-        // Get any changes
-        gpio_irq_t local[64];
         pthread_mutex_lock(&monitor_mutex);
             memcpy(local, monitors, sizeof(monitors));
         pthread_mutex_unlock(&monitor_mutex);
 
         // For each possiable interrupt
-        int i;
-        for(i = 0; i < 64; i++)
+        int i = 0;
+
+        for(i; i < 64; i++)
         {
             // If not acive no need to check
             if(!local[i].active)
                 continue;
 
             // Check file
-            x = poll (&local[i].pfd, 1, local[i].timeout);
+            x = poll(&local[i].pfd, 1, local[i].timeout);
 
             // If file has data
             if (x > 0)
@@ -99,11 +93,12 @@ static int pthIrqThread()
 
                 // Read & clear
                 (void)read(local[i].pfd.fd, &c, 1);
-            }
 
-            // Run function
-            local[i].handler(local[i].pin, local[i].event);
+                // Run function
+                local[i].handler(local[i].pin, local[i].event);
+            }
         }
+
 
         // Check wanted status of thread
         pthread_mutex_lock(&monitor_mutex);
@@ -117,6 +112,8 @@ static int pthIrqThread()
             pthread_mutex_lock(&monitor_mutex);
                 monitor_status = 0;
             pthread_mutex_unlock(&monitor_mutex);
+
+            printf("Shutting down");
 
             // Return to end thread
             return 0;
@@ -134,13 +131,16 @@ static int pthIrqThread()
 bool gpio_irq_setup()
 {
     // Setup pthread
-    pthread_attr_t pthAttr;
+     pthread_attr_t attr;
 
-    if(pthread_attr_init(&pthAttr))
+    // @NOTICE  pthread fuctions return 0 on success negative on failure
+
+    // Init attributes
+    if(pthread_attr_init(&attr) == 0)
     {
-        if (pthread_attr_setstacksize(&pthAttr, (256*1024)))
+        if (pthread_attr_setstacksize(&attr, (256*1024)) == 0)
         {
-            if(pthread_create(&pthIrq, &pthAttr, pthIrqThread, NULL))
+            if(pthread_create(&pthIrq, &attr, pthIrqThread, NULL) == 0)
             {
                 // Success
                 return true;
@@ -201,17 +201,21 @@ int gpio_irq_init(gpio_irq_t *obj, PinName pin, gpio_irq_handler handler, uint32
     // Select pin
     obj->pin = pin;
 
+    // Set the return function
+    obj->handler = handler;
+    obj->object = id;
+
+    obj->active = false;
+    obj->timeout = 0;
+    obj->pfd.fd = -1;
+    obj->pfd.events = POLLPRI | POLLERR;
+    obj->event = IRQ_NONE;
+
     // Check valid pin
     if (pin == NC)
         return -1;
 
-    // Set the return function
-    obj->handler = (uint32_t) handler;
-    obj->object = id;
-
-    obj->active = false;
-    obj->timeout = -1;
-    obj->pfd.fd = -1;
+    return 1;
 }
 
 
@@ -281,12 +285,10 @@ void gpio_irq_enable(gpio_irq_t *obj)
         case IRQ_BOTH:
             modeS = "both";
             break;
+        case IRQ_NONE:
+            modeS = "none";
+            break;
     }
-
-    // Get pin
-    char pinS[8];
-    sprintf (pinS, "%d", obj->pin);
-
 
     // Export gpio
     int fdExport = open("/sys/class/gpio/export", O_WRONLY);
@@ -303,21 +305,22 @@ void gpio_irq_enable(gpio_irq_t *obj)
 
 
     // Set gpio edge mode
-    sprintf(buf, "/sys/class/gpio/gpio%d/edge", obj->pin);
-    int fdEdge = open(buf, O_WRONLY);
-    write(fdEdge, modeS, strlen(modeS));
-    close(fdEdge);
-
+    if(obj->event != IRQ_NONE)
+    {
+        sprintf(buf, "/sys/class/gpio/gpio%d/edge", obj->pin);
+        int fdEdge = open(buf, O_WRONLY);
+        write(fdEdge, modeS, strlen(modeS));
+        close(fdEdge);
+    }
 
     // Open file handler for reading only
     sprintf(buf, "/sys/class/gpio/gpio%d/value", obj->pin);
-    obj->pfd.fd = open(buf, O_RDONLY);
+    obj->pfd.fd = open(buf, O_RDWR);
     obj->pfd.events = POLLPRI | POLLERR;
-
 
     // Remove previous interrupts
     lseek(obj->pfd.fd, 0, SEEK_SET);
-    read(obj->pfd.fd, &buf, 1);
+    (void)read(obj->pfd.fd, &buf, sizeof buf);
 }
 
 

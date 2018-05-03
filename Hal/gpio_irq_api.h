@@ -8,21 +8,12 @@ extern "C" {
 
 
     /**
-     * GPIO IRQ events
-     */
-    typedef enum {
-        IRQ_BOTH,
-        IRQ_RISE,
-        IRQ_FALL
-    } gpio_irq_event;
-
-
-    /**
      * GPIO IRQ HAL structure. gpio_irq_s is declared in the target's HAL
      */
     typedef struct gpio_irq_s gpio_irq_t;
 
-    typedef void (*gpio_irq_handler)(PinName pin, gpio_irq_event event);
+    // Declears in objects.h
+    // typedef void (*gpio_irq_handler)(PinName pin, gpio_irq_event event);
 
 
     /**
