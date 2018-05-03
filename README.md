@@ -48,15 +48,15 @@ The main goals for this library over the next 6 months is to impliment
     * Timer
     * DigitalIn (completed)
     * DigitalOut (completed)
-    * Interrupt
+    * InterruptIn (completed)
     * SPI
     * I2C (completed)
   * Platform helps in application development using C++ classes
     * Wait
     * Time
-    * NonCopyable
+    * NonCopyable (completed[Modifed mbed implementation])
     * CircularBuffer
-    * CallBack (completed[Modifed mbed Implimenation])
+    * CallBack (completed[Modifed mbed implementation])
   * Setup and control of ICs and modules
     * Analogue to Digital Controllers
       * MCP3424 (completed)
