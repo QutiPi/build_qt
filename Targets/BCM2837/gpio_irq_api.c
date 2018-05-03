@@ -21,6 +21,9 @@
  * I could be wrong but i think the above summarises the problem and solution. Please
  * let me know if i am mistaken or there is a better way.
  *
+ * The current implementation has a delay average of around 55-65uS between interupt and
+ * the users function being ran, tested through the InteruptIn driver.
+ *
  * Sam
  *
  */

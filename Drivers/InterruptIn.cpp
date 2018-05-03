@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <QDebug>
+
 namespace QutiPi { namespace Drivers
 {
 
