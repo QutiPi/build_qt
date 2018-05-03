@@ -48,6 +48,7 @@ The main goals for this library over the next 6 months is to impliment
     * Timer
     * DigitalIn (completed)
     * DigitalOut (completed)
+    * DigitalInOut (completed)
     * InterruptIn (completed)
     * SPI
     * I2C (completed)
