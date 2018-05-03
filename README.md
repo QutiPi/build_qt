@@ -39,14 +39,15 @@ The main goals for this library over the next 6 months is to impliment
     * Time (completed)
     * DMA
     * GPCLK (semi-completed)
-    * GPIO
+    * GPIO (completed)
+    * Interrupts (completed)
     * PWM
   * Standard driver to controller the IC using C++ classes
     * PwmOut
     * HwClock
     * Timer
-    * DigitalIn
-    * DigitalOut
+    * DigitalIn (completed)
+    * DigitalOut (completed)
     * Interrupt
     * SPI
     * I2C (completed)
@@ -55,6 +56,7 @@ The main goals for this library over the next 6 months is to impliment
     * Time
     * NonCopyable
     * CircularBuffer
+    * CallBack
   * Setup and control of ICs and modules
     * Analogue to Digital Controllers
       * MCP3424 (completed)
