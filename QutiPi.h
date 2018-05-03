@@ -21,6 +21,7 @@
 #include "Drivers/I2C.h"
 #include "Drivers/DigitalIn.h"
 #include "Drivers/DigitalOut.h"
+#include "Drivers/DigitalInOut.h"
 #include "Drivers/InterruptIn.h"
 
 // Include Platform

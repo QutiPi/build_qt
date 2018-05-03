@@ -52,7 +52,8 @@ HEADERS += $$PWD/Global.h \
     Drivers/InterruptIn.h \
     Platform/Platform.h \
     Platform/Callback.h \
-    Platform/NonCopyable.h
+    Platform/NonCopyable.h \
+    Drivers/DigitalInOut.h
 
 # Ensure the targets are not included
 #SOURCES -= Targets/*/*.cpp
