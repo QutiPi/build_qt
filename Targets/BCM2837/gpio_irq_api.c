@@ -35,6 +35,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <sys/unistd.h>
+#include <sched.h>
 
 
 // Monitoring thread
@@ -58,10 +59,6 @@ static int *pthIrqThread()
     // Init vars
     int x;
     uint8_t c;
-
-    // printf("Thread running \r");
-
-    // Set pirority
 
     // Get any changes
     gpio_irq_t local[64];
@@ -131,7 +128,11 @@ static int *pthIrqThread()
 bool gpio_irq_setup()
 {
     // Setup pthread
-     pthread_attr_t attr;
+    pthread_attr_t attr;
+
+    // Set piroity
+    struct sched_param schedParam;
+    schedParam.sched_priority = 90;
 
     // @NOTICE  pthread fuctions return 0 on success negative on failure
 
@@ -140,10 +141,13 @@ bool gpio_irq_setup()
     {
         if (pthread_attr_setstacksize(&attr, (256*1024)) == 0)
         {
-            if(pthread_create(&pthIrq, &attr, pthIrqThread, NULL) == 0)
+            if(pthread_attr_setschedparam(&attr, &schedParam))
             {
-                // Success
-                return true;
+                if(pthread_create(&pthIrq, &attr, pthIrqThread, NULL) == 0)
+                {
+                    // Success
+                    return true;
+                }
             }
         }
     }
