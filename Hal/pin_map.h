@@ -2,7 +2,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <fcntl.h>
-#include <sys/mman.h>
 
 #include <device.h>
 

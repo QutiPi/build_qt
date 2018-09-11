@@ -53,7 +53,8 @@ HEADERS += $$PWD/Global.h \
     Platform/Platform.h \
     Platform/Callback.h \
     Platform/NonCopyable.h \
-    Drivers/DigitalInOut.h
+    Drivers/DigitalInOut.h \
+    Hal/i2c_api.h
 
 # Ensure the targets are not included
 #SOURCES -= Targets/*/*.cpp

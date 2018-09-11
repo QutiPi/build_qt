@@ -1,25 +1,10 @@
 #include "I2C.h"
 
-/*#include <linux/i2c-dev.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <iostream>
-#include <stdexcept>*/
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <stdexcept>
-#include <errno.h>
-#include <fcntl.h>
-#include <iostream>
-#include <unistd.h>
-#include <sys/ioctl.h>
-#include <linux/i2c-dev.h>
 
 #include <device.h>
 
+#include <Hal/i2c_api.h>
 #include <Hal/time_api.h>
 
 
@@ -34,20 +19,18 @@ namespace QutiPi { namespace Drivers
 
     int I2C::configureBus(Device device)
     {
+        // Get location
+        char *location = const_cast<char *>(device.location.c_str());
+
         // Open the I2C bus
-        auto bus = open(device.location.c_str(), O_RDWR);
+        int bus = i2c_open(location, device.address);
 
-        // Check the bus is open
-        if(bus < 0)
+        // Error check
+        if(bus == -1)
         {
-            throw std::runtime_error("Failed to open i2c port for read write");
+           throw std::runtime_error("Failed to open i2c port for read write");
         }
-
-        // Select the address
-        auto address = ioctl(bus, I2C_SLAVE, device.address);
-
-        // Check the address was set correctly
-        if (address < 0)
+        else if(bus == -2)
         {
             throw std::runtime_error("Failed to write to i2c port for writing operation");
         }
@@ -72,13 +55,13 @@ namespace QutiPi { namespace Drivers
         auto bus = configureBus(device);
 
         // Attempt to write the buffer to the device
-        if (write(bus, &buf, length) != 1)
+        if (i2c_write(bus, &buf, length) != true)
         {
             throw std::runtime_error("Failed to write to i2c device for write operation");
         }
 
         // Close the bus
-        close(bus);
+        i2c_close(bus);
     }
 
 
@@ -102,7 +85,7 @@ namespace QutiPi { namespace Drivers
         do
         {
             // Read bus
-            read(bus, buf, length);
+            i2c_read(bus, buf, length);
 
             // Check size of buffer
             if ((buf[length] >> bitSize) == 0)
@@ -115,7 +98,9 @@ namespace QutiPi { namespace Drivers
         } while(true);
 
         // Close the bus
-        close(bus);
+        i2c_close(bus);
+
+        return *buf;
     }
 
 

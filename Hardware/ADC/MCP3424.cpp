@@ -1,9 +1,6 @@
 #include "MCP3424.h"
 
-#include <linux/i2c-dev.h>
-#include <sys/ioctl.h>
 #include <fcntl.h>
-#include <unistd.h>
 #include <iostream>
 #include <QDebug>
 
