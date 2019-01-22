@@ -7,38 +7,63 @@
 #include <Hal/i2c_api.h>
 #include <Hal/time_api.h>
 
+#include "Exceptions/I2COpenError.h"
+#include "Exceptions/I2CAddressError.h"
+#include "Exceptions/I2CReadError.h"
+#include "Exceptions/I2CWriteError.h"
+
+#include <QDebug>
+
 
 namespace QutiPi { namespace Drivers
 {
 
-    I2C::I2C()
+    I2C::I2C(Device ic)
+        : m_ic(ic)
     {
 
     }
 
-
-    int I2C::configureBus(Device device)
+    /**
+     * Open a bus
+     *
+     * @brief I2C::openBus
+     * @param device
+     * @return
+     */
+    int I2C::openBus(Device device)
     {
         // Get location
         char *location = const_cast<char *>(device.location.c_str());
 
         // Open the I2C bus
-        int bus = i2c_open(location, device.address);
+        m_bus = i2c_open(location);
 
         // Error check
-        if(bus == -1)
+        if(m_bus < 0)
         {
-           throw std::runtime_error("Failed to open i2c port for read write");
-        }
-        else if(bus == -2)
-        {
-            throw std::runtime_error("Failed to write to i2c port for writing operation");
+            throw Exceptions::I2COpenError(device.location, device.address);
         }
 
         // Return handler
-        return bus;
+        return m_bus;
     }
 
+
+    /**
+     * Assign an id to the bus
+     *
+     * @brief I2C::assignAddress
+     * @param device
+     */
+    void I2C::assignAddress(Device device)
+    {
+        // Return handler
+        if(i2c_address(m_bus, device.address) < 0)
+        {
+           throw Exceptions::I2CAddressError(device.location, device.address);
+        }
+    }
 
 
     /**
@@ -51,17 +76,11 @@ namespace QutiPi { namespace Drivers
      */
     void I2C::writeBytes(Device device, char &buf, int length)
     {
-        // Setup the bus @todo catch errors
-        auto bus = configureBus(device);
-
         // Attempt to write the buffer to the device
-        if (i2c_write(bus, &buf, length) != true)
+        if (i2c_write(m_bus, &buf, length) != true)
         {
-            throw std::runtime_error("Failed to write to i2c device for write operation");
+            throw Exceptions::I2CWriteError(device.location, device.address);
         }
-
-        // Close the bus
-        i2c_close(bus);
     }
 
 
@@ -75,9 +94,6 @@ namespace QutiPi { namespace Drivers
      */
     char I2C::readBtyes(Device device, char* buf, int length)
     {
-        // Setup the bus @todo catch errors
-        auto bus = configureBus(device);
-
         // Starting time
         int startingTime = current_time(MS);
 
@@ -85,20 +101,18 @@ namespace QutiPi { namespace Drivers
         do
         {
             // Read bus
-            i2c_read(bus, buf, length);
+            i2c_read(m_bus, buf, length);
 
             // Check size of buffer
-            if ((buf[length] >> bitSize) == 0)
+            if ((buf[length-1] >> bitSize) == 0)
                 break;
 
             // Check time out
             if((current_time(MS) - startingTime) > device.timeout)
-                break;
-
+            {
+                throw Exceptions::I2CReadError(device.location, device.address);
+            }
         } while(true);
-
-        // Close the bus
-        i2c_close(bus);
 
         return *buf;
     }
@@ -120,13 +134,9 @@ namespace QutiPi { namespace Drivers
         {
             return (buffer[id] &= ~(1 << bit));
         }
-        else if(value == 1)
-        {
-            return (buffer[id] |= 1 << bit);
-        }
         else
         {
-            throw std::out_of_range("Value must be 0 or 1");
+            return (buffer[id] |= 1 << bit);
         }
     }
 

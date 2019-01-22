@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdexcept>
+//#include <stdexcept>
 #include <errno.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -19,7 +19,7 @@
  * @param timeout
  * @return
  */
-int i2c_open(char location, char id, int timeout = 1000)
+int i2c_open(char* location, int timeout)
 {
     // Open the bus
     int bus = open(location, O_RDWR);
@@ -30,16 +30,19 @@ int i2c_open(char location, char id, int timeout = 1000)
         return -1;
     }
 
+    // Return bus number
+    return bus;
+}
+
+
+
+
+int i2c_address(int bus, char id)
+{
     // Assigned the address
     int address = ioctl(bus, I2C_SLAVE, id);
 
-    if (address < 0)
-    {
-        return -2;
-    }
-
-    // Return bus number
-    return bus;
+    return address;
 }
 
 /**
@@ -54,7 +57,7 @@ int i2c_open(char location, char id, int timeout = 1000)
 bool i2c_write(char bus, char *buf, int length)
 {
     // Write to bus on linux
-    if(write(bus, &buf, length) == -1)
+    if(write(bus, buf, length) == -1)
     {
         return false;
     }

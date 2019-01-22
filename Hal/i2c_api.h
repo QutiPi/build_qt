@@ -15,7 +15,10 @@ extern "C" {
      * @param timeout
      * @return
      */
-    int i2c_open(char* location, char id, int timeout = 1000);
+    int i2c_open(char* location, int timeout = 1000);
+
+
+    int i2c_address(int bus, char id);
 
     /**
      * Write to i2c bus

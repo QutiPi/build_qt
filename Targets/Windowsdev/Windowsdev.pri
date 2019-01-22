@@ -4,6 +4,10 @@ INCLUDEPATH += $$PWD/Boards/$${TARGETBOARD} \
 SUBDIRS += $$PWD/Boards/$${TARGETBOARD}
 include(Boards/$${TARGETBOARD}/$${TARGETBOARD}.pri)
 
+# Disable unused warning parameter
+QMAKE_CXXFLAGS_WARN_OFF -= -Wunused-parameter -Wall
+QMAKE_CFLAGS_WARN_OFF -= -Wunused-parameter -Wall
+
 # Include all the header files
 HEADERS += \
     $$PWD/peripheral_pins.h \
@@ -28,7 +32,3 @@ SOURCES += \
 # Include the read me files and licensing files
 DISTFILES += \
     $$PWD/readme.md
-
-
-
-

@@ -4,6 +4,9 @@
 #include <iostream>
 #include <QDebug>
 
+#include "Hal/delay_api.h"
+#include "Hal/i2c_api.h"
+
 namespace QutiPi { namespace Hardware { namespace ADC
 {
 
@@ -14,9 +17,9 @@ namespace QutiPi { namespace Hardware { namespace ADC
      * @brief MCP3424::MCP3424
      */
     MCP3424::MCP3424(Device ic)
-        :   m_ic(ic)
+        :   I2C(ic)
     {
-        // Set up the IC
+        // Set up the IC with some defaults
         configure(Port::One, Bitrate::Twelve, Conversion::Continious, Gain::One);
     }
 
@@ -40,7 +43,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
      * @param ic
      * @param res
      */
-    void MCP3424::configure(Port port, Bitrate res, Conversion mode, Gain gain)
+    void MCP3424::configure(Port port, Bitrate res, Conversion mode, Gain gain) noexcept
     {
         // Set the channel
         setChannel(port);
@@ -68,7 +71,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
     {
         // Set vars for holding data
         char buffer[10];
-        long value = 0;
+        int value = 0;
 
         // Default the sign bit to false
         signbit = false;
@@ -87,20 +90,28 @@ namespace QutiPi { namespace Hardware { namespace ADC
             m_configuration[0] = updateBuffer(m_configuration, 0, 7, 1);
 
             // Write the command
+            openBus(m_ic);
+            assignAddress(m_ic);
             writeBytes(m_ic, *m_configuration, 1);
+            closeBus();
 
             // Unset the read flag
             m_configuration[0] = updateBuffer(m_configuration, 0, 7, 0);
         }
 
         // Request data
+        openBus(m_ic);
+        assignAddress(m_ic);
         writeBytes(m_ic, *m_configuration, 1);
 
         // Read & convert the data
         switch(m_resolution)
         {
             case Bitrate::Twelve:
-                readBtyes(m_ic, buffer, 2);
+                // Read response
+                readBtyes(m_ic, buffer, 4);
+
+                // Determin value
                 value = ((buffer[0] & 15) << 8) | buffer[1];
                 if ((value >> 11) & 1)
                 {
@@ -109,7 +120,10 @@ namespace QutiPi { namespace Hardware { namespace ADC
                 }
                 break;
             case Bitrate::Fourteen:
-                readBtyes(m_ic, buffer, 2);
+                // Read response
+                readBtyes(m_ic, buffer, 4);
+
+                // Determin value
                 value = ((buffer[0] & 63) << 8) | buffer[1];
                 if ((value >> 13) & 1)
                 {
@@ -118,7 +132,10 @@ namespace QutiPi { namespace Hardware { namespace ADC
                 }
                 break;
             case Bitrate::Sixteen:
-                readBtyes(m_ic, buffer, 2);
+                // Read response
+                readBtyes(m_ic, buffer, 4);
+
+                // Determin value
                 value = (buffer[0] << 8) | buffer[1];
                 if ((value >> 15) & 1)
                 {
@@ -127,7 +144,10 @@ namespace QutiPi { namespace Hardware { namespace ADC
                 }
                 break;
             case Bitrate::Eighteen:
-                readBtyes(m_ic, buffer, 3);
+                // Read response
+                readBtyes(m_ic, buffer, 4);
+
+                // Determin value
                 value = ((buffer[0] & 0x03) << 16) | (buffer[1] << 8) | buffer[2];
                 if ((value >> 17) & 1)
                 {
@@ -136,6 +156,9 @@ namespace QutiPi { namespace Hardware { namespace ADC
                 }
                 break;
         }
+
+        // Close the bus
+        closeBus();
 
         // Return if we just want to raw digital value
         if(type == Type::Digital)
@@ -157,7 +180,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
      * @param digital
      * @return
      */
-    double MCP3424::voltage(int digital, bool useSign)
+    double MCP3424::voltage(int digital, bool useSign) noexcept
     {
         if(useSign)
         {
@@ -176,7 +199,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
      * @brief MCP3424::setChannel
      * @param port
      */
-    void MCP3424::setChannel(Port port)
+    void MCP3424::setChannel(Port port) noexcept
     {
         // Update the current channel cache
         m_port = port;
@@ -209,7 +232,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
      * @brief MCP3424::setResolution
      * @param res
      */
-    void MCP3424::setResolution(Bitrate res)
+    void MCP3424::setResolution(Bitrate res) noexcept
     {
         // Update the current channel cache
         m_resolution = res;
@@ -249,7 +272,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
      * @brief MCP3424::setConversion
      * @param mode
      */
-    void MCP3424::setConversion(Conversion mode)
+    void MCP3424::setConversion(Conversion mode) noexcept
     {
         // Update the current channel cache
         m_mode = mode;
@@ -272,7 +295,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
      * @brief MCP3424::setGain
      * @param gain
      */
-    void MCP3424::setGain(Gain gain)
+    void MCP3424::setGain(Gain gain) noexcept
     {
         // Update the current channel cache
         m_gain = gain;

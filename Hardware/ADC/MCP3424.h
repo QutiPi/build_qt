@@ -63,19 +63,18 @@ namespace QutiPi { namespace Hardware { namespace ADC
         using Drivers::I2C::Device;
 
         // Setup class
-        void configure(Port port, Bitrate res, Conversion mode, Gain gain);
+        void configure(Port port, Bitrate res, Conversion mode, Gain gain) noexcept;
 
         // Read voltage level
         double read(Port port, Type type);
 
         // Convert to voltage
-        double voltage(int digital, bool useSign);
+        double voltage(int digital, bool useSign) noexcept;
 
     private:
         // Current status of IC
         bool signbit = false;
         double m_lsb = 0;
-        Drivers::I2C::Device m_ic;
         Bitrate m_resolution;
         Conversion m_mode;
         Gain m_gain;
@@ -94,10 +93,10 @@ namespace QutiPi { namespace Hardware { namespace ADC
         };
 
         // Device configuration
-        void setChannel(Port port);
-        void setResolution(Bitrate res);
-        void setConversion(Conversion mode);
-        void setGain(Gain gain);
+        void setChannel(Port port) noexcept;
+        void setResolution(Bitrate res) noexcept;
+        void setConversion(Conversion mode) noexcept;
+        void setGain(Gain gain) noexcept;
 
 
     };

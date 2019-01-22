@@ -54,7 +54,12 @@ HEADERS += $$PWD/Global.h \
     Platform/Callback.h \
     Platform/NonCopyable.h \
     Drivers/DigitalInOut.h \
-    Hal/i2c_api.h
+    Hal/i2c_api.h \
+    Drivers/Exceptions/I2CError.h \
+    Drivers/Exceptions/I2CReadError.h \
+    Drivers/Exceptions/I2CWriteError.h \
+    Drivers/Exceptions/I2COpenError.h \
+    Drivers/Exceptions/I2CAddressError.h
 
 # Ensure the targets are not included
 #SOURCES -= Targets/*/*.cpp
