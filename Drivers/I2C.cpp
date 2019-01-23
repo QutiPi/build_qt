@@ -74,10 +74,10 @@ namespace QutiPi { namespace Drivers
      * @param buf The buffer of bits to write
      * @param length How large is the buffer
      */
-    void I2C::writeBytes(Device device, char &buf, int length)
+    void I2C::writeBytes(Device device, char *buf, int length)
     {
         // Attempt to write the buffer to the device
-        if (i2c_write(m_bus, &buf, length) != true)
+        if (i2c_write(m_bus, buf, length) != true)
         {
             throw Exceptions::I2CWriteError(device.location, device.address);
         }

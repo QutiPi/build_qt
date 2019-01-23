@@ -138,7 +138,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
             // Write the command
             openBus(m_ic);
             assignAddress(m_ic);
-            writeBytes(m_ic, *m_configuration, 1);
+            writeBytes(m_ic, m_configuration, 1);
             closeBus();
 
             // Unset the read flag
@@ -148,7 +148,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
         // Request data
         openBus(m_ic);
         assignAddress(m_ic);
-        writeBytes(m_ic, *m_configuration, 1);
+        writeBytes(m_ic, m_configuration, 1);
 
         // Read & convert the data
         switch(m_resolution)

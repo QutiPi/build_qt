@@ -32,9 +32,9 @@ namespace QutiPi { namespace Drivers
 
             void assignAddress(Device device);
 
-            void writeBytes(Device device, char& buf, int length);
+            void writeBytes(Device device, char* buf, int length);
 
-            char readBtyes(Device device, char *buf, int length);
+            char readBtyes(Device device, char* buf, int length);
 
             void closeBus()
             {
@@ -43,6 +43,12 @@ namespace QutiPi { namespace Drivers
             };
 
             char updateBuffer(char buffer[], int id, char bit, char value);
+
+            template<typename E>
+            constexpr auto toUnderlying(E e) noexcept
+            {
+                return static_cast<std::underlying_type_t<E>>(e);
+            }
 
     };
 

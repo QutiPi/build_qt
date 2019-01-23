@@ -30,7 +30,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     Hardware/ADC/MCP3424.cpp \
     Drivers/I2C.cpp \
-    Drivers/InterruptIn.cpp
+    Drivers/InterruptIn.cpp \
+    Hardware/GPIO/MCP23008.cpp
 
 # Include all the header files
 HEADERS += $$PWD/Global.h \
@@ -59,7 +60,8 @@ HEADERS += $$PWD/Global.h \
     Drivers/Exceptions/I2CReadError.h \
     Drivers/Exceptions/I2CWriteError.h \
     Drivers/Exceptions/I2COpenError.h \
-    Drivers/Exceptions/I2CAddressError.h
+    Drivers/Exceptions/I2CAddressError.h \
+    Hardware/GPIO/MCP23008.h
 
 # Ensure the targets are not included
 #SOURCES -= Targets/*/*.cpp

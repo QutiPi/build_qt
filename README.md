@@ -61,6 +61,8 @@ The main goals for this library over the next 6 months is to impliment
   * Setup and control of ICs and modules
     * Analogue to Digital Controllers
       * MCP3424 (completed)
+    * GPIO
+      * MCP23008 (completed - missing functionality)
     * Digital to Analogue Controllers
       * AD5669
     * Pulse With Modulation Controllers
