@@ -36,7 +36,14 @@ int i2c_open(char* location, int timeout)
 
 
 
-
+/**
+ * Set an address for the bus
+ *
+ * @brief i2c_address
+ * @param bus
+ * @param id
+ * @return
+ */
 int i2c_address(int bus, char id)
 {
     // Assigned the address

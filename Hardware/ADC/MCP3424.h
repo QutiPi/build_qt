@@ -57,6 +57,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
 
         // Class setup and destory
         MCP3424(Device ic);
+        MCP3424(std::string location, char address, int timeout = 1000);
         ~MCP3424();
 
         // Standard device type
@@ -67,6 +68,7 @@ namespace QutiPi { namespace Hardware { namespace ADC
 
         // Read voltage level
         double read(Port port, Type type);
+        double read(int port, Type type);
 
         // Convert to voltage
         double voltage(int digital, bool useSign) noexcept;

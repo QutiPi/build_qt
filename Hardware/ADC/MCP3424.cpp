@@ -23,6 +23,18 @@ namespace QutiPi { namespace Hardware { namespace ADC
         configure(Port::One, Bitrate::Twelve, Conversion::Continious, Gain::One);
     }
 
+    MCP3424::MCP3424(std::string location, char address, int timeout)
+        :   I2C([&location, &address, &timeout] () -> Device {
+                Device settings;
+                settings.address = 0x6c;
+                settings.location = "/dev/i2c-1";
+                return settings;
+            }())
+    {
+        // Set up the IC with some defaults
+        configure(Port::One, Bitrate::Twelve, Conversion::Continious, Gain::One);
+    }
+
 
     /**
      * Class detructure performs:
@@ -56,6 +68,40 @@ namespace QutiPi { namespace Hardware { namespace ADC
 
         // Set Gain
         setGain(gain);
+    }
+
+
+    /**
+     * Not recommed, please stay type strict for your own benifit!
+     * However the below does allow easier use when dynamically calling a port
+     *
+     * @brief MCP3424::read
+     * @param port
+     * @param type
+     * @return
+     */
+    double MCP3424::read(int port, Type type)
+    {
+        // Check range is allowed
+        if(port > 4 || port < 1)
+            throw std::range_error("Provided port range is outside what is available 1-4");
+
+        // Call type strict implimentation
+        switch(port)
+        {
+            case 1:
+                return read(Port::One, type);
+            break;
+            case 2:
+                return read(Port::Two, type);
+            break;
+            case 3:
+                return read(Port::Three, type);
+            break;
+            default:
+                return read(Port::Four, type);
+            break;
+        }
     }
 
 

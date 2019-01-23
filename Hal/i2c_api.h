@@ -17,7 +17,14 @@ extern "C" {
      */
     int i2c_open(char* location, int timeout = 1000);
 
-
+    /**
+     * Set the bus address
+     *
+     * @brief i2c_address
+     * @param bus
+     * @param id
+     * @return
+     */
     int i2c_address(int bus, char id);
 
     /**

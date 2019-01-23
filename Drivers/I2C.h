@@ -18,7 +18,7 @@ namespace QutiPi { namespace Drivers
                 std::string location;
                 char address;
                 int timeout = 1000;
-            } ;
+            };
 
             Device m_ic;
 
