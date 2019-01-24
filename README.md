@@ -62,7 +62,7 @@ The main goals for this library over the next 6 months is to impliment
     * Analogue to Digital Controllers
       * MCP3424 (completed)
     * GPIO
-      * MCP23008 (completed - missing functionality)
+      * MCP23008 (completed - missing interrupt functionality)
     * Digital to Analogue Controllers
       * AD5669
     * Pulse With Modulation Controllers

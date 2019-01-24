@@ -26,8 +26,9 @@ namespace QutiPi { namespace Hardware { namespace ADC
     MCP3424::MCP3424(std::string location, char address, int timeout)
         :   I2C([&location, &address, &timeout] () -> Device {
                 Device settings;
-                settings.address = 0x6c;
-                settings.location = "/dev/i2c-1";
+                settings.address = address;
+                settings.location = location;
+                settings.timeout = timeout;
                 return settings;
             }())
     {

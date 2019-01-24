@@ -50,6 +50,8 @@ namespace QutiPi { namespace Drivers
                 return static_cast<std::underlying_type_t<E>>(e);
             }
 
+            char checkBit(char byte, char bit);
+
     };
 
 }}

@@ -15,8 +15,8 @@ namespace QutiPi { namespace Hardware { namespace GPIO
             // Direction of pin
             enum class Direction
             {
-                Input = 0,
-                Output = 1,
+                Input = 1,
+                Output = 0,
             };
 
             // Port pull up mode
@@ -95,11 +95,11 @@ namespace QutiPi { namespace Hardware { namespace GPIO
             int read(Port port);
 
             // Register block controls @todo needs implimenting
-            // void setBankDirection(Port port, Direction direction);
+            void setBankDirection(Bank bank, Direction direction);
             void setBankPullUp(Bank bank, PullUp pullup);
             void setBankPolarity(Bank bank, Polarity polarity);
-            // void registerWrite(Port port, State state);
-            // void registerRead(Port port);
+            void registerWrite(Bank bank, State state);
+            char registerRead(Bank bank);
 
             // Interrupt controls
             // void setMirroredInterrupt(); Only for MCP23017

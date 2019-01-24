@@ -332,6 +332,27 @@ void gpio_irq_enable(gpio_irq_t *obj)
 
 
 /**
+ * Get the current logic level status of the port
+ *
+ * @brief gpio_irq_status
+ * @param obj
+ * @return
+ */
+int gpio_irq_status(gpio_irq_t *obj)
+{
+    // Buffer
+    char c;
+
+    // Get value
+    lseek(obj->pfd.fd, 0L, SEEK_SET);
+    read(obj->pfd.fd, &c, 1);
+
+    // Return logic level
+    return (c=='0') ? 0 : 1;
+}
+
+
+/**
  * Disable GPIO IRQ
  *
  * @param obj The GPIO object

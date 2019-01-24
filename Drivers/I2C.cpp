@@ -140,4 +140,25 @@ namespace QutiPi { namespace Drivers
         }
     }
 
+
+    /**
+     * Check status of bit within a byte
+     *
+     * @brief I2C::checkBit
+     * @param byte
+     * @param bit
+     * @return
+     */
+    char I2C::checkBit(char byte, char bit)
+    {
+        if(byte & (1 << bit))
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
 }}

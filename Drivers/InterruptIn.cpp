@@ -18,11 +18,13 @@ namespace QutiPi { namespace Drivers
     InterruptIn::InterruptIn(PinName pin) : gpio(),
                                             gpio_irq(),
                                             _rise(),
-                                            _fall()
+                                            _fall(),
+                                            _both()
     {
         // Default actions to nothing
         _rise.attach(donothing);
         _fall.attach(donothing);
+        _both.attach(donothing);
 
         // Init the interrupt pin
         gpio_irq_init(&gpio_irq, pin, (&InterruptIn::_irq_handler), (uint32_t)this);
@@ -48,7 +50,7 @@ namespace QutiPi { namespace Drivers
      */
     int InterruptIn::read()
     {
-        return gpio_read(&gpio);
+        return gpio_irq_status(&gpio_irq);
     }
 
 
@@ -63,6 +65,25 @@ namespace QutiPi { namespace Drivers
         gpio_mode(&gpio, pull);
     }
 
+
+    /**
+     * Attach a function to call when either edge occurs on the input
+     *
+     * @param func A pointer to a void function, or 0 to set as none
+     */
+    void InterruptIn::both(Callback<void()> func)
+    {
+        if (func)
+        {
+            _both.attach(func);
+            gpio_irq_set(&gpio_irq, IRQ_BOTH, 1);
+        }
+        else
+        {
+            _both.attach(donothing);
+            gpio_irq_set(&gpio_irq, IRQ_BOTH, 0);
+        }
+    }
 
 
     /**
@@ -116,8 +137,6 @@ namespace QutiPi { namespace Drivers
     {
         // Referance to object
         InterruptIn *handler = (InterruptIn*)((uint32_t*) id);
-        //auto *handler = (InterruptIn*)(id);
-        //handler->_rise.call();
 
         // Call revlivent to event
         switch (event)
@@ -127,6 +146,9 @@ namespace QutiPi { namespace Drivers
                 break;
             case IRQ_FALL:
                 handler->_fall.call();
+                break;
+            case IRQ_BOTH:
+                handler->_both.call();
                 break;
             case IRQ_NONE:
                 break;

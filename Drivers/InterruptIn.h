@@ -39,6 +39,14 @@ namespace QutiPi { namespace Drivers {
 
 
             /**
+             * Attach a function to call when either edge occurs on the input
+             *
+             * @param func A pointer to a void function, or 0 to set as none
+             */
+            void both(Callback<void()> func);
+
+
+            /**
              * Attach a function to call when a rising edge occurs on the input
              *
              * @param func A pointer to a void function, or 0 to set as none
@@ -90,6 +98,7 @@ namespace QutiPi { namespace Drivers {
             gpio_irq_t gpio_irq;
             Callback<void()> _rise;
             Callback<void()> _fall;
+            Callback<void()> _both;
     };
 
 }}

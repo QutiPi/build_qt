@@ -81,6 +81,16 @@ extern "C" {
     void gpio_irq_disable(gpio_irq_t *obj);
 
 
+    /**
+     * Get the current logic level status of the port
+     *
+     * @brief gpio_irq_status
+     * @param obj
+     * @return
+     */
+    int gpio_irq_status(gpio_irq_t *obj);
+
+
 #ifdef __cplusplus
 }
 #endif
